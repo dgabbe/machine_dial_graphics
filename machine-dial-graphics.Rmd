@@ -1,0 +1,38 @@
+---
+title: "Machine Dial Graphics"
+output: html_notebook
+---
+
+# Properties of the dial:
+
+```{r, parameters}
+min_hz <- 22
+max_hz <- 70
+pulley_steps <- 4 # make int
+scale_ticks <- 6 # make int
+scale_divisions <- scale_ticks - 1
+scale_bands <- pulley_steps + 1
+dial_radius_in <- 0.976
+scale_band_width_in <- 0.75
+dial_rotation <- 312
+motor_rpm <- 1725
+motor_pulley_diameters <- c(2, 3, 4, 5)
+spindle_pulley_diameters <- c(7.25, 6.25, 5.25, 4.5)
+pulley_multipler <- motor_pulley_diameters / spindle_pulley_diameters
+# motor_rpms <- hz/60hz motor_rpm for each scale_tick
+mounting_hole_dia_in <- 0.375
+```
+
+Scatch calcuations:
+```{r, scratch-calcs}
+start_angle <- 270 + (360 - dial_rotation)/2
+stop_angle <- 270 - (360 - dial_rotation)/2
+start_angle
+stop_angle
+scale_tick_angle <- (start_angle - stop_angle) / scale_divisions
+stop_angle / scale_tick_angle
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+
