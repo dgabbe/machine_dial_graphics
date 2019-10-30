@@ -1,6 +1,10 @@
 ---
 title: "Machine Dial Graphics"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
 ---
 
 # Properties of the dial:
@@ -48,7 +52,7 @@ BioCircos(genome = "hg19", yChr = FALSE, genomeFillColor = "Blues", chrPad = 0,
 Now try background track
 ```{r}
 library(BioCircos)
-tracklist = BioCircosBackgroundTrack("myBackgroundTrack", minRadius = dial_radius_in, maxRadius = dial_radius_in + scale_band_width_in,
+tracklist = BioCircosBackgroundTrack("myBackgroundTrack", minRadius = dial_diameter_in / 2, maxRadius = dial_diameter_in / 2 + scale_band_width_in,
   borderColors = "#AAAAAA", borderSize = 0.6, fillColors = "#FFBBBB")  
 
 BioCircos(tracklist, genomeFillColor = "PuOr",
