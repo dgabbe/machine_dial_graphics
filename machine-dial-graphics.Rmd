@@ -18,16 +18,33 @@ dial_rotation <- 312 # degrees
 max_hz <- 70
 min_hz <- 22
 motor_pulley_diameters <- c(2, 3, 4, 5)
-motor_rpm <- 1725
+motor_rpms <- 1725
 mounting_hole_dia_in <- 0.375
 pulley_steps <- 4 # make int
 scale_band_width_in <- (3.4375 - dial_diameter_in) / 2 # 3 7/16 in
 scale_bands <- pulley_steps + 1
-scale_ticks <- 6 # make int
+scale_divisions <- 10 # make int
 spindle_pulley_diameters <- c(7.25, 6.25, 5.25, 4.5)
 
 pulley_multipler <- motor_pulley_diameters / spindle_pulley_diameters
-scale_divisions <- scale_ticks - 1
+# scale_divisions <- scale_ticks - 1
+scaling_mod = 5
+min_scale_hz = round(min_hz / scaling_mod) * scaling_mod
+max_scale_hz = round(max_hz / scaling_mod) * scaling_mod
+hertz_scale = seq(min_scale_hz, max_scale_hz, (max_scale_hz - min_scale_hz)/ scale_divisions)
+
+rpm_scale <- function(freq_scale, pulley_ratio, motor_rpm = motor_rpms) {
+  return(round(motor_rpm * pulley_ratio * freq_scale / 60))
+}
+
+rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[1])
+rpms
+rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[2])
+rpms
+rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[3])
+rpms
+rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[4])
+rpms
 
 # right now a band is 5/32" wide
 ```
