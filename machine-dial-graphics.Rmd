@@ -1,9 +1,9 @@
 ---
 title: "Machine Dial Graphics"
 output:
+  html_notebook: default
   html_document:
     df_print: paged
-  html_notebook: default
   pdf_document: default
 ---
 
@@ -60,32 +60,38 @@ max_spindle <- hz_to_motor_rpm(max_hz) * pulley_multipler
 range <- round(max_spindle - min_spindle)
 min_max_spindle_rpms <- tibble(pulley_multipler, min_spindle, max_spindle, range)
 ```
-The RPM ranges are `r speed_ranges`.
 
 The table is `r min_max_spindle_rpms`.
 
 # Calculating Scales:
 
-```{r, stuff}
-# scale_divisions <- scale_ticks - 1
-scale_band_width_in <- (3.4375 - dial_diameter_in) / 2 # 3 7/16 in
-scaling_mod = 5
-min_scale_hz = round(min_hz / scaling_mod) * scaling_mod
-max_scale_hz = round(max_hz / scaling_mod) * scaling_mod
-# hertz_scale = seq(min_scale_hz, max_scale_hz, (max_scale_hz - min_scale_hz)/ scale_divisions)
-
-rpm_scale <- function(freq_scale, pulley_ratio, motor_rpm = motor_rpm) {
-  return(round(motor_rpm * pulley_ratio * freq_scale / 60))
-}
-# right now a band is 5/32" wide
-```
-
-Scatch calcuations:
-
-```{r, scratch-calcs}
+```{r, scales, echo=FALSE}
 scale_value <- function(value, factor = 5) {
   return(value %/% factor * factor)
 }
+min_scale <- as.integer(scale_value(hz_to_motor_rpm(min_hz) * pulley_multipler))
+max_scale <- as.integer(scale_value(hz_to_motor_rpm(max_hz) * pulley_multipler))
+range <- (as.integer(max_spindle) - as.integer(min_spindle))
+min_max_scale_rpms <- tibble(pulley_multipler, min_scale, max_scale, range)
+
+
+scale_band_width_in <- (3.4375 - dial_diameter_in) / 2 # 3 7/16 in
+
+# min_scale_hz = round(min_hz / scaling_mod) * scaling_mod
+# max_scale_hz = round(max_hz / scaling_mod) * scaling_mod
+# # hertz_scale = seq(min_scale_hz, max_scale_hz, (max_scale_hz - min_scale_hz)/ scale_divisions)
+# 
+# rpm_scale <- function(freq_scale, pulley_ratio, motor_rpm = motor_rpm) {
+#   return(round(motor_rpm * pulley_ratio * freq_scale / 60))
+# }
+# right now a band is 5/32" wide
+```
+The scales table is `r min_max_scale_rpms`
+
+# Scatch calcuations:
+
+```{r, scratch-calcs}
+
 
 ## figure out how add columns to existing tibble in tidyverse way
 
