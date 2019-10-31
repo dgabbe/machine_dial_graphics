@@ -7,58 +7,97 @@ output:
   pdf_document: default
 ---
 
-# Properties of the dial:
+Generated on: `r Sys.time()`
 
-```{r, parameters}
+```{r, libraries, echo=FALSE}
+library(tibble)
+```
+
+# Properties:
+
+```{r, functions, echo=FALSE}
 mm_to_in <- function(mm) {return(mm / 25.4)}
+```
 
-# motor_rpms <- hz/60hz motor_rpm for each scale_tick
-dial_diameter_in <- mm_to_in(45 + 4) # 2mm gap around outside of dial
-dial_rotation <- 312 # degrees
+## Motor:
+
+```{r, motor properties}
 max_hz <- 70
 min_hz <- 22
 motor_pulley_diameters <- c(2, 3, 4, 5)
-motor_rpms <- 1725
-mounting_hole_dia_in <- 0.375
-pulley_steps <- 4 # make int
-scale_band_width_in <- (3.4375 - dial_diameter_in) / 2 # 3 7/16 in
-scale_bands <- pulley_steps + 1
-scale_divisions <- 10 # make int
-spindle_pulley_diameters <- c(7.25, 6.25, 5.25, 4.5)
+motor_rpm <- 1725
+```
+```{r, motor_functions, echo=FALSE}
+hz_to_motor_rpm <- function(hz, motor_rpms = motor_rpm) {
+  return(round(hz / 60 * motor_rpms))
+}
+```
 
+## Drill Press:
+
+```{r, drill-press}
+spindle_pulley_diameters <- c(7.25, 6.25, 5.25, 4.5)
+```
+
+## Dial:
+
+```{r, dial}
+dial_gap_mm <- 2 # leave space around outside of dial
+dial_diameter_in <- mm_to_in(45 + 2 * dial_gap_mm) 
+dial_rotation <- 312 # degrees
+mounting_hole_dia_in <- 0.375
+```
+
+# RPM Ranges:
+
+Using a fixed number of divisions resulted in each of the scales having weird RPM values at major tick marks. Confirm that each pulley step range is different.
+
+```{r, speed-ranges, echo=FALSE}
 pulley_multipler <- motor_pulley_diameters / spindle_pulley_diameters
+speed_ranges <- round(hz_to_motor_rpm((max_hz - min_hz) * pulley_multipler))
+min_spindle <- hz_to_motor_rpm(min_hz) * pulley_multipler
+max_spindle <- hz_to_motor_rpm(max_hz) * pulley_multipler
+range <- round(max_spindle - min_spindle)
+min_max_spindle_rpms <- tibble(pulley_multipler, min_spindle, max_spindle, range)
+```
+The RPM ranges are `r speed_ranges`.
+
+The table is `r min_max_spindle_rpms`.
+
+# Calculating Scales:
+
+```{r, stuff}
 # scale_divisions <- scale_ticks - 1
+scale_band_width_in <- (3.4375 - dial_diameter_in) / 2 # 3 7/16 in
 scaling_mod = 5
 min_scale_hz = round(min_hz / scaling_mod) * scaling_mod
 max_scale_hz = round(max_hz / scaling_mod) * scaling_mod
-hertz_scale = seq(min_scale_hz, max_scale_hz, (max_scale_hz - min_scale_hz)/ scale_divisions)
+# hertz_scale = seq(min_scale_hz, max_scale_hz, (max_scale_hz - min_scale_hz)/ scale_divisions)
 
-rpm_scale <- function(freq_scale, pulley_ratio, motor_rpm = motor_rpms) {
+rpm_scale <- function(freq_scale, pulley_ratio, motor_rpm = motor_rpm) {
   return(round(motor_rpm * pulley_ratio * freq_scale / 60))
 }
-
-rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[1])
-rpms
-rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[2])
-rpms
-rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[3])
-rpms
-rpms <- rpm_scale(freq_scale = hertz_scale, pulley_multipler[4])
-rpms
-
 # right now a band is 5/32" wide
 ```
 
 Scatch calcuations:
+
 ```{r, scratch-calcs}
+scale_value <- function(value, factor = 5) {
+  return(value %/% factor * factor)
+}
+
+## figure out how add columns to existing tibble in tidyverse way
+
 start_angle <- 270 + (360 - dial_rotation)/2
 stop_angle <- 270 - (360 - dial_rotation)/2
 start_angle
 stop_angle
-scale_tick_angle <- (start_angle - stop_angle) / scale_divisions
-stop_angle / scale_tick_angle
+# scale_tick_angle <- (start_angle - stop_angle) / scale_divisions
+# stop_angle / scale_tick_angle
 ```
 # Circos Package
+
 Trying out Circos package, https://cran.r-project.org/web/packages/BioCircos/vignettes/BioCircos.html#introduction.
 
 ```{r, circos}
@@ -107,6 +146,7 @@ BioCircos(tracks, genomeFillColor = "Spectral", yChr = T, chrPad = 0, displayGen
 So it seems like this package can be used to make a dial.
 
 # Circlize Package
+
 Moving onto [Circular Visualization in R](https://jokergoo.github.io/circlize_book/book/)
 
 Clock example look simliar to a scale...
