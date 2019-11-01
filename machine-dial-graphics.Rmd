@@ -41,6 +41,7 @@ spindle_pulley_diameters <- c(7.25, 6.25, 5.25, 4.5)
 
 ## Dial:
 
+The potentiometer and knob determine the dimensions below.
 ```{r, dial}
 dial_gap_mm <- 2 # leave space around outside of dial
 dial_diameter_in <- mm_to_in(45 + 2 * dial_gap_mm) 
