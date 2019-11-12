@@ -15,9 +15,10 @@ library(tibble)
 
 # What is it?
 
-The idea is to programmatically design a speed dial to set the spindle RPM on a manual machine tool. In my case, a Delta DP220 drill press. Here's a two speed dial for a Bridgeport Mill. 
+The idea is to programmatically design a speed dial to set the spindle RPM on a manual machine tool. In my case, a Delta DP220 drill press. Here's a two speed dial for a Bridgeport mill and a three speed dial for a Powermatic 1150 drill press. 
 
 ![](https://www.practicalmachinist.com/vb/attachments/f20/7566d1226352266-speed-dial-bridgeport-2j-speed-dial-rotated.jpg){width=40%}
+![](http://vintagemachinery.org/photoindex/images/8630-F.jpg){width=40%}
 
 The canonical form of the problem needs to deal with the number of scales, the range of each scale, the resolution needed for machine operations, calculating ticks marks, creating the bands to fit in the available space, etc.
 
