@@ -60,10 +60,14 @@ The potentiometer and knob determine the dimensions below.
 dial_gap_mm <- 2 # leave space around outside of dial
 dial_diameter_in <- mm_to_in(45 + 2 * dial_gap_mm) 
 dial_rotation <- 312 # degrees
+start_angle <- 270 + (360 - dial_rotation)/2
+stop_angle <- 270 - (360 - dial_rotation)/2
 mounting_hole_dia_in <- 0.375
 ```
 
-# RPM Ranges:
+# Basic Calculations
+
+## RPM Ranges:
 
 Using a fixed number of divisions resulted in each of the scales having weird RPM values at major tick marks. Here is the speed range for each pulley ratio.
 
@@ -78,7 +82,7 @@ min_max_spindle_rpms <- tibble(pulley_multipler, min_spindle, max_spindle, range
 
 The table of raw data is `r min_max_spindle_rpms`.
 
-# Calculating Scales:
+## Calculating Scale End Points & Ranges:
 
 First step is to normalize the scale end points. Picked a multiple of 5.
 
@@ -93,10 +97,26 @@ min_max_scale_rpms <- tibble(pulley_multipler, min_scale, max_scale, range)
 ```
 The scales data is `r min_max_scale_rpms`
 
+## Manual Attempt for Slowest Speeds
 
-Next figure out the precision of setting the speed or the steps between tick marks.  Manually try:
+The Powermatic dial has a nice simple idea of showing speeds without tick marks. The slowest speed setting also has the fewest markings so it will be the smallest radius scale.
+
+I didn't work out a algorithm for calculating steps, but relied on experience for this trial set of values for the scale.
 ```{r scale-values}
-s1 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
+speeds1 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
+```
+
+## Compute Angles for Speeds
+
+Next is calculating the angular position on the scale. Assume that the angle calculated is the center of the text. The end points are calculated seperately because they are subject to end point rounding.
+
+```{r, angles}
+rpm_per_degree <- 385 / dial_rotation
+dial_angle <- function(s) {
+  # fill in
+}
+angles1 <- stop_angle - (speeds1[2:(length(speeds1) - 1)] - 170) * rpm_per_degree
+
 ```
 
 # Random calcuations:
@@ -104,8 +124,6 @@ s1 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
 Save some paper calculations for possible later use.
 
 ```{r scratch-calcs}
-start_angle <- 270 + (360 - dial_rotation)/2
-stop_angle <- 270 - (360 - dial_rotation)/2
 start_angle
 stop_angle
 # scale_tick_angle <- (start_angle - stop_angle) / scale_divisions
@@ -204,3 +222,6 @@ hour.degree = 90 - hour/12 * 360 - min/60 * 360/12
 arrows(0, 0, cos(hour.degree/180*pi)*0.4, sin(hour.degree/180*pi)*0.4, lwd = 2)
 ```
 
+# Random Thoughts
+
+* Use GT package to make better tables...
