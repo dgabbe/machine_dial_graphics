@@ -124,8 +124,6 @@ angles1 <- stop_angle - (speeds1[2:(length(speeds1) - 1)] - 170) * rpm_per_degre
 Save some paper calculations for possible later use.
 
 ```{r scratch-calcs}
-start_angle
-stop_angle
 # scale_tick_angle <- (start_angle - stop_angle) / scale_divisions
 # stop_angle / scale_tick_angle
 scale_band_width_in <- (3.4375 - dial_diameter_in) / 2 # 3 7/16 in
