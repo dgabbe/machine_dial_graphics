@@ -123,6 +123,7 @@ angles1 <- stop_angle - (speeds1[2:(length(speeds1) - 1)] - 170) * rpm_per_degre
 Try using `circlize` to plot `speeds1`
 
 ```{r circlize-test-run}
+circos.clear() # remember to always start w/this call
 circos.par("track.height" = 1/length(spindle_pulley_diameters),
            "clock.wise" = TRUE,
            "start.degree" = start_angle)
