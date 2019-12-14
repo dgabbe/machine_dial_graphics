@@ -124,12 +124,22 @@ Try using `circlize` to plot `speeds1`
 
 ```{r circlize-test-run}
 circos.clear() # remember to always start w/this call
-circos.par("track.height" = 1/length(spindle_pulley_diameters),
-           "clock.wise" = TRUE,
-           "start.degree" = start_angle)
-# circos.initialize()
+circos.par(track.height = 1/length(spindle_pulley_diameters),
+           clock.wise = TRUE,
+          start.degree = start_angle,
+          gap.after = stop_angle - start_angle)
+circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
+circos.track(ylim = c(0, 1))
 circos.info()
-# circos.initialize(factors = df$factors, x = df$x)
+
+## from clock example for reference
+ circos.clear()
+ circos.par(gap.degree = 0, cell.padding = c(0, 0, 0, 0), start.degree = 90)
+ circos.initialize(factors = "a", xlim = c(0, 12))
+circos.track(ylim = c(0, 1), bg.border = NA)
+circos.axis(major.at = 0:12, labels = NULL, direction = "inside",
+    major.tick.length = uy(2, "mm"))
+circos.text(1:12, rep(1, 12) - uy(6, "mm"), 1:12)
 ```
 
 # Random calcuations:
