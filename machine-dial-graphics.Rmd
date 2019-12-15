@@ -126,7 +126,11 @@ Try using `circlize` to plot `speeds1`
 circos.par("track.height" = 1/length(spindle_pulley_diameters),
            "clock.wise" = TRUE,
            "start.degree" = start_angle)
-# circos.initialize()
+# dial_bands <- factor(c("speed1", "speed2", "speed3", "speed4"))
+dial_bands <- factor(c("speed1"))
+speeds1_y <- vector("list", length = length(speeds1))
+speeds1_x <- c(1) # hard coded - fix later
+circos.initialize(factors = dial_bands, x = speeds1_x)
 circos.info()
 # circos.initialize(factors = df$factors, x = df$x)
 ```
