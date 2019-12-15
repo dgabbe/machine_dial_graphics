@@ -122,7 +122,7 @@ angles1 <- stop_angle - (speeds1[2:(length(speeds1) - 1)] - 170) * rpm_per_degre
 
 Try using `circlize` to plot `speeds1`
 
-```{r circlize-test-run}
+```{r circlize-test-run, fig.height=3, fig.width=3}
 circos.clear() # remember to always start w/this call
 circos.par(track.height = 1/length(spindle_pulley_diameters),
            clock.wise = TRUE,
@@ -130,6 +130,7 @@ circos.par(track.height = 1/length(spindle_pulley_diameters),
           gap.after = stop_angle - start_angle)
 circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
 circos.track(ylim = c(0, 1))
+circos.text(speeds1, rep(0.5, length(speeds1)), speeds1, facing = "inside")
 circos.info()
 
 ## from clock example for reference
@@ -168,13 +169,13 @@ Found 2 packages that offer some possibilities.
 
 CRAN:  https://cran.r-project.org/web/packages/BioCircos/vignettes/BioCircos.html#introduction.
 
-```{r circos}
+```{r circos, eval=FALSE, include=FALSE}
 library(BioCircos)
 BioCircos(genome = "hg19", yChr = FALSE, genomeFillColor = "Blues", chrPad = 0, 
   displayGenomeBorder = TRUE, genomeTicksDisplay = TRUE, genomeLabelDy = 0)
 ```
 Now try background track
-```{r}
+```{r eval=FALSE, include=FALSE}
 library(BioCircos)
 tracklist = BioCircosBackgroundTrack("myBackgroundTrack", minRadius = dial_diameter_in / 2, maxRadius = dial_diameter_in / 2 + scale_band_width_in,
   borderColors = "#AAAAAA", borderSize = 0.6, fillColors = "#FFBBBB")  
@@ -185,7 +186,7 @@ BioCircos(tracklist, genomeFillColor = "PuOr",
 ```
 
 
-```{r multi-track}
+```{r multi-track, eval=FALSE, include=FALSE}
 library(BioCircos)
 
 # Fix random generation for reproducibility
