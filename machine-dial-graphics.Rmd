@@ -106,6 +106,8 @@ The Powermatic dial has a nice simple idea of showing speeds without tick marks.
 I didn't work out a algorithm for calculating steps, but relied on experience for this trial set of values for the scale.
 ```{r scale-values}
 speeds1 <- c(700, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2235)
+speeds2 <- c(480, 600, 800, 1000, 1200, 1400, 1530)
+speeds3 <- c(300, 400, 500, 600, 700, 800, 965)
 speeds4 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
 ```
 
@@ -133,6 +135,12 @@ circos.par(track.height = 1/length(spindle_pulley_diameters),
 circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
 circos.track(ylim = c(0, 1))
 circos.text(speeds1, rep(0.5, length(speeds1)), speeds1, facing = "inside")
+# circos.initialize(factors = "speeds2", xlim = c(min(speeds2), max(speeds2)))
+circos.track(ylim = c(0, 1))
+circos.text(speeds2, rep(0.5, length(speeds2)), speeds2, facing = "inside")
+lines(x = c(-0.1, 0.1), y = c(0, 0))
+lines(x = c(0, 0), y = c(-0.1, 0.1))
+
 circos.info()
 
 ## from clock example for reference
