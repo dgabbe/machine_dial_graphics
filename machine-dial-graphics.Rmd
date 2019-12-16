@@ -11,7 +11,7 @@ Generated on: `r Sys.time()`
 
 ```{r libraries, echo=FALSE}
 library(tibble)
-library(circlize)
+suppressPackageStartupMessages(library(circlize))
 ```
 
 # What is it?
