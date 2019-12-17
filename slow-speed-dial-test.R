@@ -9,6 +9,7 @@ start_angle <- 270 - (360 - dial_rotation)/2
 stop_angle <- 270 + (360 - dial_rotation)/2
 
 circos.clear() # remember to always start w/this call
+font_size <- 14 #pt
 
 # Outermost track/highest speeds
 circos.par(
@@ -18,12 +19,19 @@ circos.par(
 )
 circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
 circos.track(ylim = c(0, 1), bg.col = "light blue")
-circos.text(speeds1, rep(0.5, length(speeds1)), speeds1, facing = "inside")
+circos.text(speeds1, rep(0.6, length(speeds1)), speeds1, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size), font = 2, family = "serif")
 circos.clear()
 
 # Add center mark
-lines(x = c(-0.1, 0.1), y = c(0, 0))
-lines(x = c(0, 0), y = c(-0.1, 0.1))
+lines(x = c(-0.1, 0.1), y = c(0, 0), fg = "lightgray")
+lines(x = c(0, 0), y = c(-0.1, 0.1), fg = "lightgray")
+
+# faint boundary for dial and hole for pot shaft
+symbols(c(0, 0), c(0, 0),
+        circles = c(dial_diameter_in / 2, mounting_hole_dia_in / 2),
+        fg = "yellow", add = TRUE)
+
+#circlize:::get_most_inside_radius()
 
 # 2nd highest speeds
 par(new = TRUE) # See code for fig 6.4, "Circular Visualization in R", https://jokergoo.github.io/circlize_book/book/advanced-layout.html#arrange-multiple-plots
@@ -36,9 +44,9 @@ circos.par(
 )
 circos.initialize(factors = "speeds2",
                   xlim = c(min(speeds2), max(speeds2)))
-circos.track(ylim = c(0, 1),
+circos.track(ylim = c(0, 1), bg.col = "yellow",
              panel.fun = function(x, y) {
-               circos.text(speeds2, rep(0.5, length(speeds2)), speeds2, facing = "inside")
+               circos.text(speeds2, rep(0.6, length(speeds2)), speeds2, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size))
              }
 )
 circos.clear()
@@ -57,7 +65,7 @@ circos.initialize(factors = "speeds3",
 circos.track(ylim = c(0, 1),
              bg.col = "red",
              panel.fun = function(x, y) {
-               circos.text(speeds3, rep(0.5, length(speeds3)), speeds3, facing = "inside")
+               circos.text(speeds3, rep(0.6, length(speeds3)), speeds3, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size))
              }
 )
 circos.clear()
@@ -75,7 +83,7 @@ circos.initialize(factors = "speeds4",
                   xlim = c(min(speeds4), max(speeds4)))
 circos.track(ylim = c(0, 1),
              panel.fun = function(x, y) {
-               circos.text(speeds4, rep(0.5, length(speeds4)), speeds4, facing = "inside")
+               circos.text(speeds4, rep(0.6, length(speeds4)), speeds4, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size))
              }
 )
 circos.clear()

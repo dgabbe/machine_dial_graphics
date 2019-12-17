@@ -9,9 +9,9 @@ output:
 
 Generated on: `r Sys.time()`
 
-```{r libraries, echo=FALSE}
+```{r libraries, include=FALSE}
 library(tibble)
-suppressPackageStartupMessages(library(circlize))
+library(circlize)
 ```
 
 # What is it?
@@ -126,8 +126,9 @@ angles1 <- stop_angle - (speeds1[2:(length(speeds1) - 1)] - 170) * rpm_per_degre
 
 Dial rotational spacing is accurate. Added outer circle diameter dimension, but need to verify scaling.
 
-```{r circlize-test-run, fig.height=3.426, fig.width=3.426}
+```{r circlize-test-run}
 circos.clear() # remember to always start w/this call
+font_size <- 14 #pt
 
 # Outermost track/highest speeds
 circos.par(
@@ -137,12 +138,17 @@ circos.par(
 )
 circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
 circos.track(ylim = c(0, 1), bg.col = "light blue")
-circos.text(speeds1, rep(0.5, length(speeds1)), speeds1, facing = "inside")
+circos.text(speeds1, rep(0.6, length(speeds1)), speeds1, facing = "inside", cex = fontsize(font_size))
 circos.clear()
 
 # Add center mark
-lines(x = c(-0.1, 0.1), y = c(0, 0))
-lines(x = c(0, 0), y = c(-0.1, 0.1))
+lines(x = c(-0.1, 0.1), y = c(0, 0), fg = "light gray")
+lines(x = c(0, 0), y = c(-0.1, 0.1), fg = "light gray")
+
+# faint boundary for dial and hole for pot shaft
+symbols(c(0, 0), c(0, 0),
+  circles = c(dial_diameter_in / 2, mounting_hole_dia_in / 2),
+  fg = "yellow", add = TRUE)
 
 # 2nd highest speeds
 par(new = TRUE) # See code for fig 6.4, "Circular Visualization in R", https://jokergoo.github.io/circlize_book/book/advanced-layout.html#arrange-multiple-plots
@@ -157,7 +163,7 @@ circos.initialize(factors = "speeds2",
                   xlim = c(min(speeds2), max(speeds2)))
 circos.track(ylim = c(0, 1), 
              panel.fun = function(x, y) {
-               circos.text(speeds2, rep(0.5, length(speeds2)), speeds2, facing = "inside")
+               circos.text(speeds2, rep(0.6, length(speeds2)), speeds2, facing = "inside", cex = fontsize(font_size))
              }
 )
 circos.clear()
@@ -176,7 +182,7 @@ circos.initialize(factors = "speeds3",
 circos.track(ylim = c(0, 1),
              bg.col = "red",
              panel.fun = function(x, y) {
-               circos.text(speeds3, rep(0.5, length(speeds3)), speeds3, facing = "inside")
+               circos.text(speeds3, rep(0.6, length(speeds3)), speeds3, facing = "inside", cex = fontsize(font_size))
              }
 )
 circos.clear()
@@ -194,7 +200,7 @@ circos.initialize(factors = "speeds4",
                   xlim = c(min(speeds4), max(speeds4)))
 circos.track(ylim = c(0, 1),
              panel.fun = function(x, y) {
-               circos.text(speeds4, rep(0.5, length(speeds4)), speeds4, facing = "inside")
+               circos.text(speeds4, rep(0.6, length(speeds4)), speeds4, facing = "inside", cex = fontsize(font_size))
              }
 )
 circos.clear()
@@ -290,7 +296,7 @@ circos.track(): creates plotting regions for cells in one single track.
 
 
 Clock example look simliar to a scale...
-```{r clock-example}
+```{r clock-example, eval=FALSE, include=FALSE}
 library(circlize)
 circos.clear()
 circos.par(gap.degree = 0, cell.padding = c(0, 0, 0, 0), start.degree = 90)
