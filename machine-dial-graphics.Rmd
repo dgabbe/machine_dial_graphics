@@ -252,6 +252,8 @@ Sometimes the fonts used are termed *engraving fonts*.
 * Popular 50's fonts: https://thenextweb.com/dd/2012/02/10/design-flashback-10-iconic-typefaces-born-in-the-1950s/
 * Futura
 * DIN 1451
+    * https://www.dafont.com/din-1451.font
+    * https://www.1001fonts.com/din-1451-fonts.html
 * Fira-Code
 * Look thru my font comparisons doc
 
