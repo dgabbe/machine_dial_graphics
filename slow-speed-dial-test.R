@@ -8,6 +8,8 @@ dial_rotation <- 312 # degrees
 start_angle <- 270 - (360 - dial_rotation)/2
 stop_angle <- 270 + (360 - dial_rotation)/2
 
+# Code from circlize-test-run chunk
+
 circos.clear() # remember to always start w/this call
 font_size <- 14 #pt
 
@@ -44,10 +46,21 @@ circos.par(
 )
 circos.initialize(factors = "speeds2",
                   xlim = c(min(speeds2), max(speeds2)))
-circos.track(ylim = c(0, 1), bg.col = "yellow",
-             panel.fun = function(x, y) {
-               circos.text(speeds2, rep(0.6, length(speeds2)), speeds2, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size))
-             }
+circos.track(
+  ylim = c(0, 1),
+  bg.col = "yellow",
+  panel.fun = function(x, y) {
+    circos.text(
+      speeds2,
+      rep(0.6, length(speeds2)),
+      speeds2,
+      facing = "outside",
+      niceFacing = TRUE,
+      cex = fontsize(font_size),
+      font = 2,
+      family = "serif"
+    )
+  }
 )
 circos.clear()
 
@@ -65,7 +78,7 @@ circos.initialize(factors = "speeds3",
 circos.track(ylim = c(0, 1),
              bg.col = "red",
              panel.fun = function(x, y) {
-               circos.text(speeds3, rep(0.6, length(speeds3)), speeds3, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size))
+               circos.text(speeds3, rep(0.6, length(speeds3)), speeds3, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size), font = 2, family = "serif")
              }
 )
 circos.clear()
@@ -81,9 +94,19 @@ circos.par(
 )
 circos.initialize(factors = "speeds4",
                   xlim = c(min(speeds4), max(speeds4)))
-circos.track(ylim = c(0, 1),
-             panel.fun = function(x, y) {
-               circos.text(speeds4, rep(0.6, length(speeds4)), speeds4, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size))
-             }
+circos.track(
+  ylim = c(0, 1),
+  panel.fun = function(x, y) {
+    circos.text(
+      speeds4,
+      rep(0.6, length(speeds4)),
+      speeds4,
+      facing = "outside",
+      niceFacing = TRUE,
+      cex = fontsize(font_size),
+      font = 2,
+      family = "serif"
+    )
+  }
 )
 circos.clear()
