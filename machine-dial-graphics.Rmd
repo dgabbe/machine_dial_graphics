@@ -105,10 +105,16 @@ The Powermatic dial has a nice simple idea of showing speeds without tick marks.
 
 I didn't work out a algorithm for calculating steps, but relied on experience for this trial set of values for the scale.
 ```{r scale-values}
-speeds1 <- c(700, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2235)
-speeds2 <- c(480, 600, 800, 1000, 1200, 1400, 1530)
-speeds3 <- c(300, 400, 500, 600, 700, 800, 965)
-speeds4 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
+speeds <- list(
+  c(700, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2235),
+  c(480, 600, 800, 1000, 1200, 1400, 1530),
+  c(300, 400, 500, 600, 700, 800, 965),
+  c(170, 200, 250, 300, 350, 400, 450, 500, 555)
+)
+# speeds1 <- c(700, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2235)
+# speeds2 <- c(480, 600, 800, 1000, 1200, 1400, 1530)
+# speeds3 <- c(300, 400, 500, 600, 700, 800, 965)
+# speeds4 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
 ```
 
 ## Circlize Package Prototype
@@ -116,11 +122,11 @@ speeds4 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
 Experiment with `Circlize` to see what kind of dial can be produced. Messy code follows.
 
 ```{r angles, eval=FALSE, include=FALSE}
-rpm_per_degree <- 385 / dial_rotation
-dial_angle <- function(s) {
-  # fill in
-}
-angles1 <- stop_angle - (speeds1[2:(length(speeds1) - 1)] - 170) * rpm_per_degree
+# rpm_per_degree <- 385 / dial_rotation
+# dial_angle <- function(s) {
+#   # fill in
+# }
+# angles1 <- stop_angle - (speeds1[2:(length(speeds1) - 1)] - 170) * rpm_per_degree
 
 ```
 
@@ -138,9 +144,9 @@ circos.par(
 )
 
 # Outermost track/highest speeds
-circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
+circos.initialize(factors = "speeds1", xlim = c(min(speeds[1]), max(speeds[1])))
 circos.track(ylim = c(0, 1), bg.col = "light blue")
-circos.text(speeds1, rep(0.6, length(speeds1)), speeds1, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size), font = 2, family = "serif")
+circos.text(speeds[1], rep(0.6, length(speeds[1])), speeds[1], facing = "outside", niceFacing = TRUE, cex = fontsize(font_size), font = 2, family = "serif")
 circos.clear()
 
 # plot exists at this point.
@@ -165,15 +171,15 @@ circos.par(
   gap.after = stop_angle - start_angle
 )
 circos.initialize(factors = "speeds2",
-                  xlim = c(min(speeds2), max(speeds2)))
+                  xlim = c(min(speeds[2]), max(speeds[2])))
 circos.track(
   ylim = c(0, 1),
   bg.col = "yellow",
   panel.fun = function(x, y) {
     circos.text(
-      speeds2,
-      rep(0.6, length(speeds2)),
-      speeds2,
+      speeds[2],
+      rep(0.6, length(speeds[2])),
+      speeds[2],
       facing = "outside",
       niceFacing = TRUE,
       cex = fontsize(font_size),
@@ -194,11 +200,11 @@ circos.par(
   gap.after = stop_angle - start_angle
 )
 circos.initialize(factors = "speeds3",
-                  xlim = c(min(speeds3), max(speeds3)))
+                  xlim = c(min(speeds[3]), max(speeds[3])))
 circos.track(ylim = c(0, 1),
              bg.col = "red",
              panel.fun = function(x, y) {
-               circos.text(speeds3, rep(0.6, length(speeds3)), speeds3, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size), font = 2, family = "serif")
+               circos.text(speeds[3], rep(0.6, length(speeds[3])), speeds[3], facing = "outside", niceFacing = TRUE, cex = fontsize(font_size), font = 2, family = "serif")
              }
 )
 circos.clear()
@@ -213,14 +219,14 @@ circos.par(
   gap.after = stop_angle - start_angle
 )
 circos.initialize(factors = "speeds4",
-                  xlim = c(min(speeds4), max(speeds4)))
+                  xlim = c(min(speeds[4]), max(speeds[4])))
 circos.track(
   ylim = c(0, 1),
   panel.fun = function(x, y) {
     circos.text(
-      speeds4,
-      rep(0.6, length(speeds4)),
-      speeds4,
+      speeds[4],
+      rep(0.6, length(speeds[4])),
+      speeds[4],
       facing = "outside",
       niceFacing = TRUE,
       cex = fontsize(font_size),
