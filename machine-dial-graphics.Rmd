@@ -117,17 +117,17 @@ speeds4 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
 
 Experiment with `Circlize` to see what kind of dial can be produced. Messy code follows.
 
-Dial rotational spacing is accurate. Need to address spacing details and fonts.  Colored bands are a debugging aid.
+Dial rotational spacing is accurate. Need to address spacing details and fonts.  Display border to fine tune alignment. The R script produces the correct plot, but when included in this notebook, the canvas limits appear not to be processed the same way.
 
 ```{r circlize-test-run}
 # Define some parameters
-font_size <- 12 #pt
+font_size <- 14 #pt
 scale_height <-
   (dial_outer_edge_dia_in - dial_diameter_in) / length(spindle_pulley_diameters)
 gap_after = stop_angle - start_angle
 
 # Start the dial
-# circos.clear() # remember to always start w/this call
+circos.clear() # remember to always start w/this call
 circos.par(
   clock.wise = TRUE,
   start.degree = start_angle,
@@ -150,18 +150,19 @@ circos.clear()
 lines(x = c(-0.1, 0.1), y = c(0, 0), fg = "lightgray")
 lines(x = c(0, 0), y = c(-0.1, 0.1), fg = "lightgray")
 
-# faint boundary for dial and hole for pot shaft
+# faint boundary for dial and shaft
 symbols(c(0, 0), c(0, 0),
         circles = c(dial_diameter_in / 2, mounting_hole_dia_in / 2),
-        fg = "yellow", add = TRUE)
+        fg = "lightgray", add = TRUE)
 
 #circlize:::get_most_inside_radius() # For better setting canvas limits
 
 # 2nd highest speeds
 par(new = TRUE) # See code for fig 6.4, "Circular Visualization in R", https://jokergoo.github.io/circlize_book/book/advanced-layout.html#arrange-multiple-plots
+xy_canvas_lim <- 1.16
 circos.par(
-  canvas.xlim = c(-1.2, 1.2),
-  canvas.ylim = c(-1.2, 1.2),
+  canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
+  canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
   clock.wise = TRUE,
   start.degree = start_angle,
   gap.after = gap_after
@@ -185,14 +186,14 @@ circos.track(
     )
   }
 )
-circos.par()
 circos.clear()
 
 # 3nd highest speeds
 par(new = TRUE)
+xy_canvas_lim <- 1.4
 circos.par(
-  canvas.xlim = c(-1.55, 1.55),
-  canvas.ylim = c(-1.55, 1.55),
+  canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
+  canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
   clock.wise = TRUE,
   start.degree = start_angle,
   gap.after = gap_after
@@ -220,9 +221,10 @@ circos.clear()
 
 # 4th highest speeds
 par(new = TRUE)
+xy_canvas_lim <- 1.75
 circos.par(
-  canvas.xlim = c(-2.1, 2.1),
-  canvas.ylim = c(-2.1, 2.1),
+  canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
+  canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
   clock.wise = TRUE,
   start.degree = start_angle,
   gap.after = gap_after
@@ -247,7 +249,9 @@ circos.track(
   }
 )
 circos.clear()
+```
 
+```{r motor-speeds, eval=FALSE, include=FALSE}
 # motor speeds
 # par(new = TRUE)
 # circos.par(
