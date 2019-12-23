@@ -121,17 +121,19 @@ Dial rotational spacing is accurate. Need to address spacing details and fonts. 
 
 ```{r circlize-test-run}
 # Define some parameters
-font_size <- 14 #pt
+font_size <- 15 #pt
 scale_height <-
   (dial_outer_edge_dia_in - dial_diameter_in) / length(spindle_pulley_diameters)
 gap_after = stop_angle - start_angle
+cell_padding <- c(0.00, 1.00, 0.00, 1.00)
 
 # Start the dial
-circos.clear() # remember to always start w/this call
+# circos.clear() # remember to always start w/this call
 circos.par(
   clock.wise = TRUE,
   start.degree = start_angle,
-  gap.after = gap_after
+  gap.after = gap_after,
+  cell.padding = cell_padding
 )
 
 # Outermost track/highest speeds
@@ -165,7 +167,8 @@ circos.par(
   canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
   clock.wise = TRUE,
   start.degree = start_angle,
-  gap.after = gap_after
+  gap.after = gap_after,
+  cell.padding = cell_padding
 )
 circos.initialize(factors = "speeds2",
                   xlim = c(min(speeds2), max(speeds2)))
@@ -196,7 +199,8 @@ circos.par(
   canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
   clock.wise = TRUE,
   start.degree = start_angle,
-  gap.after = gap_after
+  gap.after = gap_after,
+  cell.padding = cell_padding
 )
 circos.initialize(factors = "speeds3",
                   xlim = c(min(speeds3), max(speeds3)))
@@ -227,7 +231,8 @@ circos.par(
   canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
   clock.wise = TRUE,
   start.degree = start_angle,
-  gap.after = gap_after
+  gap.after = gap_after,
+  cell.padding = cell_padding
 )
 circos.initialize(factors = "speeds4",
                   xlim = c(min(speeds4), max(speeds4)))
@@ -291,6 +296,8 @@ Initially, won't worry about creating PDF files because an SVG file is needed.
 * `extrafonts` package
 * `showfonts` package
 * [Zev on fonts](http://zevross.com/blog/2014/07/30/tired-of-using-helvetica-in-your-r-graphics-heres-how-to-use-the-fonts-you-like-2/)
+* Details on R's plotting internals: https://nicercode.github.io/guides/plotting/
+* Window sizing: https://stackoverflow.com/questions/2129952/creating-a-plot-window-of-a-particular-size
 * Detailed example: https://cedricscherer.netlify.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/
 
 ## Fonts
@@ -379,31 +386,6 @@ So it seems like this package can be used to make a dial.
 ## Circlize Package
 
 [Circular Visualization in R](https://jokergoo.github.io/circlize_book/book/)
-
-```{r clock-example, eval=FALSE, include=FALSE}
-library(circlize)
-circos.clear()
-circos.par(gap.degree = 0, cell.padding = c(0, 0, 0, 0), start.degree = 90)
-circos.initialize(factors = "a", xlim = c(0, 12))
-circos.track(ylim = c(0, 1), bg.border = NA)
-circos.axis(major.at = 0:12, labels = NULL, direction = "inside", 
-    major.tick.length = uy(2, "mm"))
-circos.text(1:12, rep(1, 12) - uy(6, "mm"), 1:12, facing = "downward")
-
-current.time = as.POSIXlt(Sys.time())
-sec = ceiling(current.time$sec)
-min = current.time$min
-hour = current.time$hour
-
-sec.degree = 90 - sec/60 * 360
-arrows(0, 0, cos(sec.degree/180*pi)*0.8, sin(sec.degree/180*pi)*0.8)
-
-min.degree = 90 - min/60 * 360
-arrows(0, 0, cos(min.degree/180*pi)*0.7, sin(min.degree/180*pi)*0.7, lwd = 1)   
-
-hour.degree = 90 - hour/12 * 360 - min/60 * 360/12
-arrows(0, 0, cos(hour.degree/180*pi)*0.4, sin(hour.degree/180*pi)*0.4, lwd = 2)
-```
 
 # Random Thoughts
 
