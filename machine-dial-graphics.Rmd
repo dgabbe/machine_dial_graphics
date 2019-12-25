@@ -9,8 +9,8 @@ output:
 Generated on: `r Sys.time()`
 
 ```{r libraries, include=FALSE}
-library(tibble)
 library(circlize)
+library(tibble)
 ```
 
 # What is it?

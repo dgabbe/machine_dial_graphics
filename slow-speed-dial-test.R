@@ -1,4 +1,5 @@
 suppressPackageStartupMessages(library(circlize))
+library(tibble)
 
 mm_to_in <- function(mm) {return(mm / 25.4)}
 pt_to_in <- function(pt) {return(pt / 72)}
@@ -7,6 +8,12 @@ speeds1 <- c(700, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2235)
 speeds2 <- c(480, 600, 800, 1000, 1200, 1400, 1530)
 speeds3 <- c(300, 400, 500, 600, 700, 800, 965)
 speeds4 <- c(170, 200, 250, 300, 350, 400, 450, 500, 555)
+
+speeds <- tribble( ~band, ~speeds, ~bg_color,
+                   1, speeds1, "light blue",
+                   2, speeds2, "yellow",
+                   3, speeds3, "red",
+                   4, speeds4, "purple")
 
 mounting_hole_dia_in <- 0.375
 dial_outer_edge_dia_in <- 3.426
@@ -20,8 +27,10 @@ spindle_pulley_diameters <- c(7.25, 6.25, 5.25, 4.5)
 # Code from circlize-test-run chunk
 # Define some parameters
 font_size <- 15 #pt
-scale_height <-
-  (dial_outer_edge_dia_in - dial_diameter_in) / length(spindle_pulley_diameters)
+ # scale_height <-
+ #   (dial_outer_edge_dia_in - dial_diameter_in) / length(spindle_pulley_diameters)
+scale_height <- pt_to_in(1.6 * font_size)
+font_family <- "DIN Alternate" # "DIN 1451 fette Breitschrift 1936"
 gap_after = stop_angle - start_angle
 cell_padding <- c(0.00, 1.00, 0.00, 1.00)
 
@@ -41,12 +50,21 @@ circos.track(
   bg.border = "light blue",
   track.height = convert_length(scale_height, "in")
 )
-circos.text(speeds1, rep(0.5, length(speeds1)), speeds1, facing = "outside", niceFacing = TRUE, cex = fontsize(font_size), font = 2, family = "serif")
+circos.text(
+  speeds1,
+  rep(0.5, length(speeds1)),
+  speeds1,
+  facing = "outside",
+  niceFacing = TRUE,
+  cex = fontsize(font_size),
+  font = 2,
+  family = font_family
+)
 circos.clear()
 
 # plot exists at this point.
 # Add center mark
-# par(new = TRUE)
+par(new = TRUE)
 lines(x = c(-0.1, 0.1), y = c(0, 0), fg = "lightgray")
 lines(x = c(0, 0), y = c(-0.1, 0.1), fg = "lightgray")
 
@@ -83,7 +101,7 @@ circos.track(
       niceFacing = TRUE,
       cex = fontsize(font_size),
       font = 2,
-      family = "serif"
+      family = font_family
     )
   }
 )
@@ -116,7 +134,7 @@ circos.track(
       niceFacing = TRUE,
       cex = fontsize(font_size),
       font = 2,
-      family = "serif"
+      family = font_family
     )
   }
 )
@@ -124,7 +142,7 @@ circos.clear()
 
 # 4th highest speeds
 par(new = TRUE)
-xy_canvas_lim <- 1.75
+xy_canvas_lim <- 1.72
 circos.par(
   canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
   canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
@@ -148,7 +166,7 @@ circos.track(
       niceFacing = TRUE,
       cex = fontsize(font_size),
       font = 2,
-      family = "serif"
+      family = font_family
     )
   }
 )
