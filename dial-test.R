@@ -49,6 +49,7 @@ for (i in 1:nrow(dial_scales)) {
   xy_canvas_lim <- dial_scales[[i, "xy_canvas_lim"]]
   bg_color <- dial_scales[[i, "bg_color"]]
 
+  par(new = TRUE) # See code for fig 6.4, "Circular Visualization in R", https://jokergoo.github.io/circlize_book/book/advanced-layout.html#arrange-multiple-plots
   circos.clear() # remember to always start w/this call
   circos.par(
     canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
@@ -78,14 +79,14 @@ for (i in 1:nrow(dial_scales)) {
       )
     }
   )
-  par(new = TRUE) # See code for fig 6.4, "Circular Visualization in R", https://jokergoo.github.io/circlize_book/book/advanced-layout.html#arrange-multiple-plots
 
 }
 circos.clear()
 
 # Add rectangular boundry, add canvas size
 # Add dimensional marks
-par(new = TRUE)
+#par(new = TRUE)
+par()
 cross_mark <- mounting_hole_dia_in / 2
 abline(h = -cross_mark:cross_mark, v = -cross_mark:cross_mark)
 # lines(x = c(-cross_mark, cross_mark), y = c(0, 0), col = "lightgray")
