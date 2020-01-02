@@ -30,9 +30,13 @@ font_size <- 15 #pt
  # scale_height <-
  #   (dial_outer_edge_dia_in - dial_diameter_in) / length(spindle_pulley_diameters)
 scale_height <- pt_to_in(1.6 * font_size)
-font_family <- "DIN Alternate" # "DIN 1451 fette Breitschrift 1936"
+font_family <- "DIN Alternate"
+# font_family <- "DIN 1451 fette Breitschrift 1936"
 gap_after = stop_angle - start_angle
 cell_padding <- c(0.00, 1.00, 0.00, 1.00)
+
+xy_canvas_lims <- c(1, 1.16, 1.4,  1.72)
+add_column(speeds, xy_canvas_lim = xy_canvas_lims)
 
 # Start the dial
 # circos.clear() # remember to always start w/this call
@@ -42,6 +46,18 @@ circos.par(
   gap.after = gap_after,
   cell.padding = cell_padding
 )
+
+# plot exists at this point.
+# Add center mark
+par(new = TRUE)
+lines(x = c(-0.1, 0.1), y = c(0, 0), fg = "lightgray")
+lines(x = c(0, 0), y = c(-0.1, 0.1), fg = "lightgray")
+
+# faint boundary for dial and shaft
+symbols(c(0, 0), c(0, 0),
+        circles = c(dial_diameter_in / 2, mounting_hole_dia_in / 2),
+        fg = "lightgray", add = TRUE)
+
 
 # Outermost track/highest speeds
 circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
@@ -62,22 +78,11 @@ circos.text(
 )
 circos.clear()
 
-# plot exists at this point.
-# Add center mark
-par(new = TRUE)
-lines(x = c(-0.1, 0.1), y = c(0, 0), fg = "lightgray")
-lines(x = c(0, 0), y = c(-0.1, 0.1), fg = "lightgray")
-
-# faint boundary for dial and shaft
-symbols(c(0, 0), c(0, 0),
-        circles = c(dial_diameter_in / 2, mounting_hole_dia_in / 2),
-        fg = "lightgray", add = TRUE)
-
 #circlize:::get_most_inside_radius() # For better setting canvas limits
 
 # 2nd highest speeds
 par(new = TRUE) # See code for fig 6.4, "Circular Visualization in R", https://jokergoo.github.io/circlize_book/book/advanced-layout.html#arrange-multiple-plots
-xy_canvas_lim <- 1.16
+# xy_canvas_lim <- 1.16
 circos.par(
   canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
   canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
@@ -110,7 +115,7 @@ circos.clear()
 
 # 3nd highest speeds
 par(new = TRUE)
-xy_canvas_lim <- 1.4
+# xy_canvas_lim <- 1.4
 circos.par(
   canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
   canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
