@@ -1,3 +1,16 @@
+# To-do
+# - More research into R.devices package to handle plot generation in a uniform way.
+#   Compare to trying to set RStudioGD device or using Quartz device (but Mac specific)
+#   NoRStudioGD parameter for dev.
+
+# https://jokergoo.github.io/circlize_book/book/introduction.html
+
+# Research articles:
+# - http://www.melissaclarkson.com/resources/R_guides/documents/figure_layout_Ver1.pdf
+# - http://www.gastonsanchez.com/stat133/slides/34-graphics-devices/34-graphics-devices.pdf
+# - https://stackoverflow.com/questions/23621012/display-and-save-the-plot-simultaneously-in-r-rstudio
+# - https://www.stat.auckland.ac.nz/~paul/RGraphics/chapter1.pdf
+
 suppressPackageStartupMessages(library(circlize))
 library(plotrix)
 library(tibble)
