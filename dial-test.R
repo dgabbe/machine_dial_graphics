@@ -1,7 +1,8 @@
 # To-do
 # - More research into R.devices package to handle plot generation in a uniform way.
 #   Compare to trying to set RStudioGD device or using Quartz device (but Mac specific)
-#   NoRStudioGD parameter for dev.
+#   dev.new(…, noRStudioGD = FALSE) can control if RStudio device is used.
+#   grDevices::quartz() check out parameters.
 
 # https://jokergoo.github.io/circlize_book/book/introduction.html
 
@@ -26,7 +27,7 @@ mounting_hole_dia_in <- 0.375
 dial_gap_mm <- 2 # leave space around outside of dial
 dial_diameter_in <- mm_to_in(45 + 2 * dial_gap_mm)
 
-font_size <- 15 #pt
+font_size <- 18 #pt
 scale_height <- pt_to_in(1.6 * font_size)
 font_family <- "DIN Alternate"
 # font_family <- "DIN 1451 fette Breitschrift 1936"
@@ -66,11 +67,12 @@ dial_scales <- tribble(
   4, speeds4
 )
 
-xy_canvas_lims <- c(1, 1.16, 1.4, 1.72) # to nest independent plots
-# xy_canvas_lims <- c(1, 1.16, 1.2, 1.4)
+#xy_canvas_lims <- c(1, 1.16, 1.4, 1.72) # to nest independent plots
+#xy_canvas_lims <- c(1, 1.16, 1.35, 1.6) # font size: 16pt
+xy_canvas_lims <- c(1, 1.16, 1.355, 1.65) # font size: 18pt
 dial_scales <- add_column(dial_scales, bg_color = c("light blue", "yellow", "red", "purple")) # debugging
 dial_scales <- add_column(dial_scales, xy_canvas_lim = xy_canvas_lims)
-dial_scales <- add_column(dial_scales, type_adj = c(16, 12, 9, 7))
+dial_scales <- add_column(dial_scales, type_adj = c(20, 16, 12, 8))
 dial_scales <- add_column(dial_scales, line_width = c(4, 3, 2.5, 1.75))
 dial_scales <- add_column(dial_scales, line_color = c("#000000", "#222222", "#444444", "#666666"))
 
@@ -205,10 +207,6 @@ par(
 #         radius = c(dial_diameter_in / 2),
 #         border = "lightgray", lty = 3)
 
-# Add my info to dial
-# par(new = TRUE)
-
-circos.clear
 
 if (is_save_to_file) {
   dev.off()
