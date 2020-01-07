@@ -74,7 +74,9 @@ dial_scales <- tribble(
 
 #xy_canvas_lims <- c(1, 1.16, 1.4, 1.72) # to nest independent plots
 #xy_canvas_lims <- c(1, 1.16, 1.35, 1.6) # font size: 16pt
-xy_canvas_lims <- c(1, 1.16, 1.355, 1.65) # font size: 18pt
+# xy_canvas_lims <- c(1, 1.16, 1.355, 1.65) # font size: 18pt
+
+xy_canvas_lim <- 1 # init for outermost scale
 dial_scales <- add_column(dial_scales, bg_color = c("light blue", "yellow", "red", "purple")) # debugging
 dial_scales <- add_column(dial_scales, xy_canvas_lim = xy_canvas_lims)
 dial_scales <- add_column(dial_scales, type_adj = c(20, 16, 12, 8))
@@ -136,7 +138,7 @@ plotrix::draw.circle(
 #
 for (i in 1:nrow(dial_scales)) {
   speeds <- dial_scales[[i, "speeds"]]
-  xy_canvas_lim <- dial_scales[[i, "xy_canvas_lim"]]
+  # xy_canvas_lim <- dial_scales[[i, "xy_canvas_lim"]]
   bg_color <- dial_scales[[i, "bg_color"]]
   type_adj <- dial_scales[[i, "type_adj"]]
   line_width <- dial_scales[[i, "line_width"]]
@@ -153,7 +155,7 @@ for (i in 1:nrow(dial_scales)) {
   )
 
   circos.initialize(factors = "speeds",
-                    xlim = c(min(speeds), max(speeds)))
+                    xlim = range(speeds))
 
     circos.track(
     ylim = c(0, 1),
@@ -181,7 +183,20 @@ for (i in 1:nrow(dial_scales)) {
       )
     }
   )
-note(txt = paste("Scale", i, ": bottom radius: ", format(round(as.numeric(CELL_META$cell.bottom.radius), 4)))) # debug
+
+note(txt = paste("Scale", i, ": bottom radius: ",
+    format(round(as.numeric(CELL_META$cell.bottom.radius), 4)),
+    " xy_canvas_limit: ",
+    format(round(as.numeric(xy_canvas_lim), 3)),
+    " track.margin: ",
+    CELL_META$track.margin,
+    " inner most radius: ",
+    format(round(as.numeric(circlize:::get_most_inside_radius()), 3))
+    )) # debug
+
+  # xy_canvas_lim <- xy_canvas_lim + 1 - CELL_META$cell.bottom.radius + CELL_META$track.margin
+  xy_canvas_lim <- xy_canvas_lim + 1 - circlize:::get_most_inside_radius()
+
   circos.clear() # always end w/clear
 }
 

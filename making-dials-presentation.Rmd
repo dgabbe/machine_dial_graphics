@@ -1,0 +1,97 @@
+---
+title: 'A Maker Project: Creating Dials with R'
+author: "David Gabbé"
+date: "1/7/2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Code to output to different directory:
+<!-- knit: (function(inputFile, encoding) {  -->
+<!--       out_dir <- 'test'; -->
+<!--       rmarkdown::render(inputFile, -->
+<!--                         encoding=encoding,  -->
+<!--                         output_file=file.path(dirname(inputFile), out_dir, 'analysis.html')) }) -->
+
+## Project Summary
+
+- How to make an attractive speed dial for an upgraded 1947 cast iron drill press.
+- add figures & Rpubs text here
+
+## About David
+
+## Credits
+
+Package central to the success of this project so the official cite:
+
+Gu, Z. circlize implements and enhances circular visualization 
+  in R. Bioinformatics 2014
+
+## Fonts
+
+- Legibility important for safe operation
+- Space contraints need to be solved
+- Layout contributes to efficient operation
+
+## Not All Fonts Are Equal `r emo::ji("confounded")`
+
+- Included vs Free vs Paid
+- Glyph set
+- Encoding
+- Format (PostScript Type1, TrueType, Open Font)
+
+## Quartz Fonts
+
+```{r quartz-fonts, echo=TRUE}
+quartzFonts()
+```
+
+## R Ecosystem
+
+Packages used:
+
+- circlize
+- extrafonts
+- R.Devices (verify)
+- tibble
+
+## References
+
+- [_Circular Visualization in R_](https://jokergoo.github.io/circlize_book/book/), Zuguang Gu
+- [_How Big is Your Graph?_](https://rstudio.com/wp-content/uploads/2016/10/how-big-is-your-graph.pdf) Cheat Sheet
+
+## Extra Material
+
+## Measuring Pixels
+
+- [Measuring Pixels](http://blog.pmean.com/measuring-pixels/)
+- [Drawing circles](http://blog.pmean.com/circle/)
+- [Example of converting between user and device spaces](http://blog.pmean.com/rotating-text/)
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
