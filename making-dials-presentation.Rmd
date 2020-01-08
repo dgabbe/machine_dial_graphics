@@ -1,5 +1,5 @@
 ---
-title: 'A Maker Project: Creating Dials with R'
+title: 'Occassional Maker Series: Creating Dials with R'
 author: "David Gabbé"
 date: "1/7/2020"
 output: ioslides_presentation
@@ -18,17 +18,17 @@ Code to output to different directory:
 
 ## Project Summary
 
-- How to make an attractive speed dial for an upgraded 1947 cast iron drill press.
-- add figures & Rpubs text here
+Programmatically design a speed dial to set the spindle RPM on a manual machine tool. Output an SVG for laser etching.
 
-## About David
+![](https://www.practicalmachinist.com/vb/attachments/f20/7566d1226352266-speed-dial-bridgeport-2j-speed-dial-rotated.jpg){width=45%}
+![](http://vintagemachinery.org/photoindex/images/8630-F.jpg){width=50%}
 
-## Credits
 
-Package central to the success of this project so the official cite:
+## David's Background
 
-Gu, Z. circlize implements and enhances circular visualization 
-  in R. Bioinformatics 2014
+- Series of high school shop classes
+- PostScript printer driver and firmware development
+- Digital photography
 
 ## Fonts
 
@@ -48,6 +48,31 @@ Gu, Z. circlize implements and enhances circular visualization
 ```{r quartz-fonts, echo=TRUE}
 quartzFonts()
 ```
+https://www.r-bloggers.com/changing-the-font-of-r-base-graphic-plots/
+
+## The Fun Part - Picking a Font
+
+extrafont
+
+## RStudio's Graphic Device
+
+```
+options("device")
+$device
+[1] "RStudioGD"
+```
+
+Has some interesting properties...
+
+- [Figure size in RStudio is different than in rendered output](https://github.com/rstudio/rstudio/issues/4521)
+- [Plots with fixed fig.width are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
+
+## Circlize's Plot Sequence
+
+1. `par()`
+1. `circos.par()`
+1. `circos.initialize()`
+1. `par(new)` <----- The Trick
 
 ## R Ecosystem
 
@@ -71,27 +96,15 @@ Packages used:
 - [Drawing circles](http://blog.pmean.com/circle/)
 - [Example of converting between user and device spaces](http://blog.pmean.com/rotating-text/)
 
-## R Markdown
+## Thanks
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Credits
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+Gu, Z. circlize implements and enhances circular visualization 
+  in R. Bioinformatics 2014
+  
+## Contact Info
 
-## Slide with Bullets
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
 
-## Slide with R Output
-
-```{r cars, echo = TRUE}
-summary(cars)
-```
-
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
-```
 
