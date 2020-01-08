@@ -40,7 +40,7 @@ font_family <- "DIN Alternate"
 gap_after = stop_angle - start_angle
 cell_padding <- c(0.00, 1.00, 0.00, 1.00)
 
-is_save_to_file <- TRUE
+is_save_to_file <- FALSE
 
 #
 # Start the dial
