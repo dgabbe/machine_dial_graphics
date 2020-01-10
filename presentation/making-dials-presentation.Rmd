@@ -107,7 +107,30 @@ fill in
 - [Drawing circles](http://blog.pmean.com/circle/)
 - [Example of converting between user and device spaces](http://blog.pmean.com/rotating-text/)
 
+## decode this
 
+Reprex didn't capture the graphics state - look into what happened!
+
+``` r
+  dev.list()
+#> quartz_off_screen 
+#>                 2
+  dev.cur()
+#> quartz_off_screen 
+#>                 2
+  dev.size(units = "in")
+#> [1] 7 5
+  par("din")
+#> [1] 7 5
+  par("mai")
+#> [1] 1.02 0.82 0.82 0.42
+  par("pin")
+#> [1] 5.76 3.16
+  par("usr")
+#> [1] 0 1 0 1
+```
+
+<sup>Created on 2020-01-10 by the [reprex package](https://reprex.tidyverse.org) (v0.3.0)</sup>
 
 
 
