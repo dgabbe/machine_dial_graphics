@@ -88,14 +88,6 @@ Packages used:
 - [_Circular Visualization in R_](https://jokergoo.github.io/circlize_book/book/), Zuguang Gu
 - [_How Big is Your Graph?_](https://rstudio.com/wp-content/uploads/2016/10/how-big-is-your-graph.pdf) Cheat Sheet
 
-## Extra Material
-
-## Measuring Pixels
-
-- [Measuring Pixels](http://blog.pmean.com/measuring-pixels/)
-- [Drawing circles](http://blog.pmean.com/circle/)
-- [Example of converting between user and device spaces](http://blog.pmean.com/rotating-text/)
-
 ## Thanks
 
 ## Credits
@@ -104,6 +96,17 @@ Gu, Z. circlize implements and enhances circular visualization
   in R. Bioinformatics 2014
   
 ## Contact Info
+
+fill in
+
+## Extra Material
+
+## Measuring Pixels
+
+- [Measuring Pixels](http://blog.pmean.com/measuring-pixels/)
+- [Drawing circles](http://blog.pmean.com/circle/)
+- [Example of converting between user and device spaces](http://blog.pmean.com/rotating-text/)
+
 
 
 
