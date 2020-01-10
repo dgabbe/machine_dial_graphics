@@ -125,7 +125,7 @@ par(
 )
 
 # Create a new frame so RStudio doesn't overplot
-plot.new()  # not creating a new plot in RStudio Plot pane...
+plot.new(asp = 1)  # not creating a new plot in RStudio Plot pane...
 
 # draw a border for printing
 draw_outer_border()

@@ -1,3 +1,4 @@
+
 explr_graphics <- function() {
   dev.list()
   dev.cur()
@@ -9,6 +10,13 @@ explr_graphics <- function() {
 }
 
 par_decoder <- function() {
+  p <- par()
+  groups <- list("device", "panel", "figure", "margin", "plot", "usr", "annotation", "axes", "elements")
+  message("Device params")
+  message("Panel params")
+  message("Margin params")
+  message("Plot params")
+  message("Usr coordinates")
   # decode the graphics parameters
   # device size
   # aspect ratio
@@ -17,6 +25,4 @@ par_decoder <- function() {
   # margins
   # plot area
   # usr coordinates
-
-
 }
