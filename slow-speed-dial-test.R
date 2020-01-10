@@ -60,7 +60,7 @@ symbols(c(0, 0), c(0, 0),
 
 
 # Outermost track/highest speeds
-circos.initialize(factors = "speeds1", xlim = c(min(speeds1), max(speeds1)))
+circos.initialize(factors = "speeds1", xlim = range(speeds1))
 circos.track(
   ylim = c(0, 1),
   bg.border = "light blue",
@@ -92,7 +92,7 @@ circos.par(
   cell.padding = cell_padding
 )
 circos.initialize(factors = "speeds2",
-                  xlim = c(min(speeds2), max(speeds2)))
+                  xlim = range(speeds2))
 circos.track(
   ylim = c(0, 1),
   bg.border = "yellow",
