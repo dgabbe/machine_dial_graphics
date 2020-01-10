@@ -54,6 +54,22 @@ https://www.r-bloggers.com/changing-the-font-of-r-base-graphic-plots/
 
 extrafont
 
+## R's Plotting Basics 1/2
+
+- `grDevices` contains R's Graphic Devices
+- `dev.*()` functions control them
+
+<<check to see if there are options>>
+
+## R's Plotting Basics 2/2
+
+- R thinks about making plots rather than rendering polygons
+- `graphics` is the underlying package
+- `plot()` is the underlying function
+- `par()` with its _72_ parameters controls plots
+
+<<check to see if there are options>>
+
 ## RStudio's Graphic Device
 
 ```
