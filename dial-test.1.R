@@ -6,6 +6,7 @@
 #
 # - grDevices::convertXY to get info about differnt cordinate systems
 # - R.devices - see how window or quartz works
+# - Try font Format_1452 Medium (actually make a font selector book using 'facets' in plots)
 
 # https://jokergoo.github.io/circlize_book/book/introduction.html
 
@@ -110,11 +111,18 @@ if (is_save_to_file) {
 
 # Set up the device
 # Do not include 'new = "TRUE"' because there is no plot yet.
-par(fin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
-    pin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
-    mai = c(0, 0, 0, 0),
-    fig = c(0, 1, 0, 1) # wonder if this is the problem...
-    )
+par(
+  # Figure region in inches
+  fin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
+  # plot dimensions in inches
+  pin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
+  # margin size in inches
+  mai = c(0, 0, 0, 0),
+  # (NDC) coordinates of the figure region in the display region of the device.
+  fig = c(0, 1, 0, 1), # wonder if this is the problem...
+  # annotation - axis and overall titles
+  ann = FALSE
+)
 
 # Create a new frame so RStudio doesn't overplot
 plot.new()  # not creating a new plot in RStudio Plot pane...
