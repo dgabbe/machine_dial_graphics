@@ -30,6 +30,55 @@ Programmatically design a speed dial to set the spindle RPM on a manual machine 
 - PostScript printer driver and firmware development
 - Digital photography
 
+## Maker's Creedo
+
+"It will work after the 3rd try"
+
+
+## Attempt #1: Inkscape
+
+- Inkscape is wonderful
+- Manual process works better with fewer variables
+
+## Attempt #2: R
+
+- Have R figure out the scale values
+- Weird scale values, quicker to pick by hand
+
+## Attempt #3: R again
+
+- Have R create an SVG file
+- Found a circular plotting package
+
+## Selecting a Circular Visualization Package
+
+- There are 5? circular vizualization packages
+- `Circularize` comes with a book!
+
+## Plot Examples
+
+![](./circular-pokemon-1.png){height=480px}
+
+##
+
+![](doodle.jpeg){height=480px}
+
+##
+
+```{r, out.width = "600px"}
+knitr::include_graphics("./too-much-data-example.jpeg")
+```
+
+##
+
+![](./clock-1.svg){height=520px}
+
+##
+
+```{r, out.width = "800px"}
+knitr::include_graphics("./circlize-nested-1.svg")
+```
+
 ## Fonts
 
 - Legibility important for safe operation
