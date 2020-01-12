@@ -15,15 +15,22 @@ par_decoder <- function() {
   groups <- list("device", "panel", "figure", "margin", "plot", "usr", "annotation", "axes", "elements", "text")
 
   decoder <- tribble(
-    ~param, ~group, ~short_def,
-    "adj", "text", "determines the way in which text strings are justified in text, mtext and title",
-    "ann", "annotation", " annotate the plots with axis titles and overall titles",
-    "ask", "", "deprecated - use devAskNewPage",
-    "bg", "device", "background color of device region",
-    "bty", "plot", "type of box drawn around plots",
-    "cex", "text", "relative magnification of text & symbols to default",
-    "cex.axis", "axes", "relative magnification of axis notation to cex",
-    "cex.lab", "axes", "relative magnification of x & y labels to cex"
+    ~param, ~group, ~short_def, ~read_only,
+    "adj", "text", "determines the way in which text strings are justified in text, mtext and title", FALSE,
+    "ann", "annotation", " annotate the plots with axis titles and overall titles", FALSE,
+    "ask", "", "deprecated - use devAskNewPage", FALSE,
+    "bg", "device", "background color of device region", FALSE,
+    "bty", "plot", "type of box drawn around plots", FALSE,
+    "cex", "text", "relative magnification of text & symbols to default", FALSE,
+    "cex.axis", "axes", "relative magnification of axis notation to cex", FALSE,
+    "cex.lab", "axes", "relative magnification of x & y labels to cex", FALSE,
+    "cex.main", "axes", "TBI", FALSE,
+    "cex.sub", "axes", "TBI", FALSE,
+    "cin", "text", "character size - inches. Same as 'cra'", TRUE,
+    "col", "plot", "default plotting color", FALSE,
+    # other col.*
+    "cra", "text", "character size - pixels. Same as 'cin'", TRUE
+
   )
 
   message("Device params")
