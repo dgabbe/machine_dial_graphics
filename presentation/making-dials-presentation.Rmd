@@ -2,11 +2,13 @@
 title: 'Occassional Maker Series: Creating Dials with R'
 author: "David Gabbé"
 date: "1/7/2020"
-output: ioslides_presentation
+output: 
+  slidy_presentation:
+    footer: "Add footer"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', out.width = '900px', out.height = '900px')
 ```
 
 Code to output to different directory:
@@ -45,10 +47,22 @@ Programmatically design a speed dial to set the spindle RPM on a manual machine 
 - Have R figure out the scale values
 - Weird scale values, quicker to pick by hand
 
-## Attempt #3: R again
+## Attempt #3: R - ggplot
 
-- Have R create an SVG file
-- Found a circular plotting package
+hum...
+
+```{r circos-init-line, eval=FALSE, echo=TRUE}
+plot(circos.par("canvas.xlim"), circos.par("canvas.ylim"), 
+     type = "n", ann = FALSE, axes = FALSE, asp = 1
+)
+```
+
+Nope.
+
+## Attempt #3: R - base graphics
+
+- Create an SVG file
+- Find a circular plotting package
 
 ## Selecting a Circular Visualization Package
 
@@ -57,29 +71,78 @@ Programmatically design a speed dial to set the spindle RPM on a manual machine 
 
 ## Plot Examples
 
-![](./circular-pokemon-1.png){height=480px}
+```{r pokemon}
+knitr::include_graphics("./circular-pokemon-1.png")
+```
 
 ##
 
-![](doodle.jpeg){height=480px}
+```{r doodle}
+knitr::include_graphics("./doodle.jpeg")
+```
 
-##
+##  
 
-```{r, out.width = "600px"}
+```{r death-star}
 knitr::include_graphics("./too-much-data-example.jpeg")
 ```
 
-##
+---
 
-![](./clock-1.svg){height=520px}
+```{r clock}
+knitr::include_graphics("./clock-1.svg")
+```
 
-##
+## 
 
-```{r, out.width = "800px"}
+```{r separate_nested_plots}
 knitr::include_graphics("./circlize-nested-1.svg")
 ```
 
-## Fonts
+## R's Plotting Basics 1/2
+
+Need a graphic output device of some kind to display results.
+
+- `grDevices` contains R's Graphic Devices and rasterizer
+- `dev.*()` functions control them
+
+\<\<check to see if there are options\>\>
+
+## R's Plotting Basics 2/2
+
+- R thinks about making plots
+- `graphics` is the underlying package
+- `plot()` is the underlying function
+- `par()` with its *72* parameters controls plots
+
+\<\<check to see if there are options\>\>
+
+## RStudio's Graphic Device
+
+```
+options("device")
+$device
+[1] "RStudioGD"
+```
+
+Has some interesting properties...
+
+Sample of RStudio issues:
+
+- [Figure size in RStudio is different than in rendered output](https://github.com/rstudio/rstudio/issues/4521)
+- [Plots with fixed fig.width are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
+
+## Circlize's Plot Sequence
+
+1. `par()`
+1. `circos.par()`
+1. `circos.initialize()`
+1. `par(new)` <----- The Trick
+
+## Half way there! 
+What else could there be?
+
+## Fonts `r emo::ji("cartwheel")``r emo::ji("cartwheel")``r emo::ji("cartwheel")`
 
 - Legibility important for safe operation
 - Space contraints need to be solved
@@ -97,47 +160,12 @@ knitr::include_graphics("./circlize-nested-1.svg")
 ```{r quartz-fonts, echo=TRUE}
 quartzFonts()
 ```
-https://www.r-bloggers.com/changing-the-font-of-r-base-graphic-plots/
 
 ## The Fun Part - Picking a Font
 
 extrafont
 
-## R's Plotting Basics 1/2
-
-- `grDevices` contains R's Graphic Devices
-- `dev.*()` functions control them
-
-<<check to see if there are options>>
-
-## R's Plotting Basics 2/2
-
-- R thinks about making plots rather than rendering polygons
-- `graphics` is the underlying package
-- `plot()` is the underlying function
-- `par()` with its _72_ parameters controls plots
-
-<<check to see if there are options>>
-
-## RStudio's Graphic Device
-
-```
-options("device")
-$device
-[1] "RStudioGD"
-```
-
-Has some interesting properties...
-
-- [Figure size in RStudio is different than in rendered output](https://github.com/rstudio/rstudio/issues/4521)
-- [Plots with fixed fig.width are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
-
-## Circlize's Plot Sequence
-
-1. `par()`
-1. `circos.par()`
-1. `circos.initialize()`
-1. `par(new)` <----- The Trick
+\<\<add examples of different fonts\>\>
 
 ## R Ecosystem
 
@@ -152,6 +180,8 @@ Packages used:
 
 - [_Circular Visualization in R_](https://jokergoo.github.io/circlize_book/book/), Zuguang Gu
 - [_How Big is Your Graph?_](https://rstudio.com/wp-content/uploads/2016/10/how-big-is-your-graph.pdf) Cheat Sheet
+- [Zev Ross' Blog](https://www.zevross.com/blog/)
+- https://www.r-bloggers.com/changing-the-font-of-r-base-graphic-plots/
 
 ## Thanks
 
@@ -162,7 +192,11 @@ Gu, Z. circlize implements and enhances circular visualization
   
 ## Contact Info
 
-fill in
+David Gabbé
+
+dgabbe@acm.org
+
+[github.com/dgabbe](https://github.com/dgabbe)
 
 ## Extra Material
 
