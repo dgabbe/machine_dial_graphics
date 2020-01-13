@@ -4,17 +4,28 @@ explr_graphics <- function() {
   #
   # Device list
   #
+  indent = "    "
   d <- dev.list()
   dn <- names(d)
   dc <- dev.cur()
   dcn <- names(dc)
   dc_index <- which(dcn %in% dn)
-  message(paste0("devices:  "), appendLF = FALSE)
-  for (i in 1:length(d)) {
-    if (i == dc_index) {
-      message(paste0(">> ", d[[i]], ":", dn[[i]], " << "), appendLF = FALSE)
-    } else {
-      message(paste0(d[[i]], ":", dn[[i]], " "), appendLF = FALSE)
+
+  message_nolf <- function(...){
+    message(..., appendLF = FALSE)
+  }
+
+  message()
+  message_nolf(paste0(indent, "devices:  "))
+  if (is.null(d)) {
+    message_nolf(paste("NULL"))
+  } else {
+    for (i in 1:length(d)) {
+      if (i == dc_index) {
+        message_nolf(paste0(">> ", d[[i]], ":", dn[[i]], " <<  "))
+      } else {
+        message_nolf(paste0(d[[i]], ":", dn[[i]], " "))
+      }
     }
   }
   message()
@@ -22,12 +33,24 @@ explr_graphics <- function() {
   #
   # Parameters
   #
-  dev.size(units = "in") # format paste(dev.size(units = "in"))
+  message()
+  message(paste0(indent, "dev.size (in): "), appendLF = FALSE)
+  message(format(dev.size(units = "in"), digits = 3, nsmall = 3))
+   # format paste(dev.size(units = "in"))
 
-  par("din")
-  par("mai")
-  par("pin")
-  par("usr")
+  message(paste0(indent, "din: "), appendLF = FALSE)
+  message(paste(format(par("din"), digits = 3, nsmall = 3)))
+
+  message(paste0(indent, "mai: "), appendLF = FALSE)
+  message(par("mai"))
+
+  message(paste0(indent, "pin: "), appendLF = FALSE)
+  message(format(par("pin"), digits = 3, nsmall = 3))
+
+  message(paste0(indent, "usr: "), appendLF = FALSE)
+  message(format(par("usr"), digits = 3, nsmall = 3))
+
+
 }
 
 par_decoder <- function() {
