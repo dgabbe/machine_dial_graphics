@@ -1,14 +1,29 @@
 library(tibble)
 
 explr_graphics <- function() {
+  #
+  # Device list
+  #
   d <- dev.list()
   dn <- names(d)
   dc <- dev.cur()
-  dcn <- names(dev.cur()) # which(dcn%in%dn) to add current dev notation
-  message(paste("devices:  ", appendLF = FALSE))
-#          , d[[1]], ":", dn[[1]]))
+  dcn <- names(dc)
+  dc_index <- which(dcn %in% dn)
+  message(paste0("devices:  "), appendLF = FALSE)
+  for (i in 1:length(d)) {
+    if (i == dc_index) {
+      message(paste0(">> ", d[[i]], ":", dn[[i]], " << "), appendLF = FALSE)
+    } else {
+      message(paste0(d[[i]], ":", dn[[i]], " "), appendLF = FALSE)
+    }
+  }
+  message()
 
-    dev.size(units = "in") # format paste(dev.size(units = "in"))
+  #
+  # Parameters
+  #
+  dev.size(units = "in") # format paste(dev.size(units = "in"))
+
   par("din")
   par("mai")
   par("pin")
