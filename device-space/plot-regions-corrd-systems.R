@@ -19,11 +19,10 @@ y <- c(0, dial_outer_edge_dia_in)
 # Setup parameters for plots
 par(mai = rep(0, 4))
 
-# Create a plot, in this case, an empty one
+# Create an empty plot
 plot(x, y, asp = 1, type = "n", ann = FALSE, axes = FALSE)
 
-#explr_graphics()
-#par(no.readonly = TRUE)
+explr_graphics()
 
 box_types <- c("plot", "figure", "inner", "outer")
 line_type <- c("solid")
@@ -33,6 +32,7 @@ box(which = "inner", col = "green")
 box(which = "outer", col = "blue")
 
 par(new = TRUE)
+explr_graphics()
 plot(c(-center, center), c(-center, center),
      asp = 1,
      type = "n",
@@ -40,8 +40,13 @@ plot(c(-center, center), c(-center, center),
      axes = FALSE
 )
 
-lines(c(-mounting_hole_rad - 0.06, mounting_hole_rad + 0.06), c(0, 0))
-lines(c(0, 0), c(-mounting_hole_rad - 0.06, mounting_hole_rad + 0.06))
+explr_graphics()
+segments(
+  x0 = c(-mounting_hole_rad - 0.06, 0),
+  x1 = c(mounting_hole_rad + 0.06, 0),
+  y0 = c(0, -mounting_hole_rad - 0.06),
+  y1 = c(0, mounting_hole_rad + 0.06)
+)
 
 plotrix::draw.circle(
   0, 0,

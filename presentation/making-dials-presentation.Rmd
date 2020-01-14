@@ -24,8 +24,8 @@ Code to output to different directory:
 - Output an SVG file for laser etching.
 
 ```{r sample-dials, fig.align='default', fig.show = "hold", out.width = "50%", out.height="50%"}
-knitr::include_graphics("./speed-dial-rotated.jpg")
-knitr::include_graphics("./8630-F.jpg")
+knitr::include_graphics("./images/speed-dial-rotated.jpg")
+knitr::include_graphics("./images/8630-F.jpg")
 ```
 
 ## David's Background
@@ -39,21 +39,70 @@ knitr::include_graphics("./8630-F.jpg")
 "It will work after the 3rd try"
 
 
-## Attempt #1: Inkscape
+## Iteration #1: Inkscape
 
 - Inkscape is wonderful
 - Manual process works better with fewer variables
 
-## Attempt #2: R
+## Iteration #2: R
 
 - Develop code with Rnotebook
 - Have R figure out the scale values
 - Weird scale values, quicker to pick by hand
 - Historical footnote: _Machine Dials and Scales_ WR Machine Design v21 n8 Aug 1949, pp.98-105
 
-## Attempt #3: R - ggplot
+\<\<Show Rnotebook code\>\>
 
-hum...
+## Iteration #3: Plot Text on a Circle
+
+- Exploratory coding showed this would be much work
+
+## Iteration #3: Search for an R Package
+
+- Polar coordinate packages would need work
+- Circular visualization packages had the features
+
+## Iteration #3: Selecting a Circular Visualization Package
+
+- The contestants: circlize, BioCircos, RCircos, CIRCUS, and OmicCircos
+- The winner: `Circularize` comes with a book!
+
+In 2009, Martin Krzywinski announced his Perl program, _Circos_, in his 
+[“Circos: an Information Aesthetic for Comparative Genomics”](https://genome.cshlp.org/content/early/2009/06/15/gr.092759.109.abstract) paper.
+
+## Plot Examples
+
+```{r pokemon}
+knitr::include_graphics("./images/circular-pokemon-1.png")
+```
+
+##
+
+```{r doodle}
+knitr::include_graphics("./images/doodle.jpeg")
+```
+
+##  
+
+```{r death-star}
+knitr::include_graphics("./images/too-much-data-example.jpeg")
+```
+
+---
+
+```{r clock}
+knitr::include_graphics("./images/clock-1.svg")
+```
+
+## 
+
+```{r separate_nested_plots}
+knitr::include_graphics("./images/circlize-nested-1.svg")
+```
+
+## Coding the Dial
+
+What makes `circlize` tick?
 
 ```{r circos-init-line, eval=FALSE, echo=TRUE}
 plot(circos.par("canvas.xlim"), circos.par("canvas.ylim"), 
@@ -61,49 +110,11 @@ plot(circos.par("canvas.xlim"), circos.par("canvas.ylim"),
 )
 ```
 
-Nope.
+R's built-in basic plotting package `graphics` will be used.
 
-## Attempt #3: R - base graphics
 
-- Create an SVG file
-- Find a circular plotting package
 
-## Selecting a Circular Visualization Package
-
-Circos, originally in Perl, was created by Martin Krzywinski, who announced in 2009 with this brilliant paper: [“Circos: an Information Aesthetic for Comparative Genomics”](https://genome.cshlp.org/content/early/2009/06/15/gr.092759.109.abstract).
-
-- The contestants: circlize, BioCircos, RCircos, CIRCUS, and OmicCircos
-- The winner: `Circularize` comes with a book!
-
-## Plot Examples
-
-```{r pokemon}
-knitr::include_graphics("./circular-pokemon-1.png")
-```
-
-##
-
-```{r doodle}
-knitr::include_graphics("./doodle.jpeg")
-```
-
-##  
-
-```{r death-star}
-knitr::include_graphics("./too-much-data-example.jpeg")
-```
-
----
-
-```{r clock}
-knitr::include_graphics("./clock-1.svg")
-```
-
-## 
-
-```{r separate_nested_plots}
-knitr::include_graphics("./circlize-nested-1.svg")
-```
+No `ggplot`, not this time
 
 ## R's Plotting Basics 1/2
 
@@ -138,12 +149,20 @@ Sample of RStudio issues:
 - [Figure size in RStudio is different than in rendered output](https://github.com/rstudio/rstudio/issues/4521)
 - [Plots with fixed fig.width are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
 
-## Circlize's Plot Sequence
+## Circlize: Plot Sequence
 
 1. `par()`
 1. `circos.par()`
 1. `circos.initialize()`
 1. `par(new)` <----- The Trick
+
+## Circlize: Visual Model
+
+## Independent Factors
+
+\<\<code showing how factors sets the entire scale\>\>
+
+## Circlize parameters
 
 ## Half way there! 
 What else could there be?
@@ -169,7 +188,7 @@ quartzFonts()
 
 ## The Fun Part - Picking a Font
 
-extrafont
+`extrafont`
 
 \<\<add examples of different fonts\>\>
 

@@ -16,7 +16,7 @@ explr_graphics <- function() {
   }
 
   message()
-  message_nolf(paste0(indent, "devices:  "))
+  message_nolf(paste0("  devices:  "))
   if (is.null(d)) {
     message_nolf(paste("NULL"))
   } else {
@@ -28,7 +28,7 @@ explr_graphics <- function() {
       }
     }
   }
-  message()
+  # message()
 
   #
   # Parameters
@@ -37,17 +37,13 @@ explr_graphics <- function() {
   message_nolf(paste0(indent, "dev.size (in): "))
   message(paste(format(dev.size(units = "in"), digits = 3, nsmall = 3), collapse = " "))
 
-  message_nolf(paste0(indent, "din: "))
-  message(paste(format(par("din"), digits = 3, nsmall = 3), collapse = " "))
-
-  message_nolf(paste0(indent, "mai: "))
-  message(paste(par("mai"), collapse = " "))
-
-  message_nolf(paste0(indent, "pin: "))
-  message(paste(format(par("pin"), digits = 3, nsmall = 3), collapse = " "))
-
-  message_nolf(paste0(indent, "usr: "))
-  message(paste(par("usr"), collapse = " "))
+  lapply(
+    list("din", "mai", "pin", "usr"),
+    function(p) {
+      message_nolf(paste0(indent, p, ": "))
+      message(paste(format(par(p), digits = 3, nsmall = 3), collapse = " "))
+    }
+  )
 
   message()
 }
@@ -61,79 +57,79 @@ par_decoder <- function(params) {
   groups <- list("device", "panel", "figure", "margin", "plot", "usr", "annotation", "axes", "elements", "text")
 
   decoder <- tribble(
-    ~param, ~group, ~short_def, ~read_only,
-    "adj", "text", "determines the way in which text strings are justified in text, mtext and title", FALSE,
-    "ann", "annotation", " annotate the plots with axis titles and overall titles", FALSE,
-    "ask", "", "deprecated - use devAskNewPage", FALSE,
-    "bg", "device", "background color of device region", FALSE,
-    "bty", "plot", "type of box drawn around plots", FALSE,
-    "cex", "text", "relative magnification of text & symbols to default", FALSE,
-    "cex.axis", "axes", "relative magnification of axis notation to cex", FALSE,
-    "cex.lab", "axes", "relative magnification of x & y labels to cex", FALSE,
-    "cex.main", "axes", "TBI", FALSE,
-    "cex.sub", "axes", "TBI", FALSE,
-    "cin", "text", "character size - inches. Same as 'cra'", TRUE,
-    "col", "plot", "default plotting color", FALSE,
-    "col.axis", "axes", "add description", FALSE,
-    "col.lab", "annotation", "add description", FALSE,
-    "col.main", "annotation", "add description", FALSE,
-    "col.sub", "annotation", "add description", FALSE,
-    "cra", "text", "character size - pixels. Same as 'cin'", TRUE,
-    "crt", "text", "add description", FALSE,
-    "csi", "text", "add description", TRUE,
-    "cxy", "text", "add description", TRUE,
-    "din", "device", "add description", TRUE,
-    "err", "", "Unimplemented", FALSE,
-    "family", "text", "add description", FALSE,
-    "fg", "plot", "add description", FALSE,
-    "fig", "figure", "add description", FALSE,
-    "fin", "figure", "add description", FALSE,
-    "font", "text", "add description", FALSE,
-    "font.axis", "axes", "add description", FALSE,
-    "font.lab", "annotation", "add description", FALSE,
-    "font.main", "annotation", "add description", FALSE,
-    "font.sub", "annotation", "add description", FALSE,
-    "lab", "axes", "add description", FALSE,
-    "las", "axes", "add description", FALSE,
-    "lend", "element", "add description", FALSE,
-    "lheight", "text", "add description", FALSE,
-    "ljoin", "element", "add description", FALSE,
-    "lmitre", "element", "add description", FALSE,
-    "lty", "element", "add description", FALSE,
-    "lwd", "element", "add description", FALSE,
-    "mai", "margin", "add description", FALSE,
-    "mar", "margin", "add description", FALSE,
-    "mex", "text", "add description", FALSE,
-    "mfcol", "panel", "add description", FALSE,
-    "mfg", "panel", "add description", FALSE,
-    "mfrow", "panel", "add description", FALSE,
-    "mgp", "axes", "add description", FALSE,
-    "mkh", "", "Ignored", FALSE,
-    "new", "plot", "add description", FALSE,
-    "oma", "panel", "add description", FALSE,
-    "omd", "panel", "add description", FALSE,
-    "omi", "panel", "add description", FALSE,
-    "page", "plot", "add description", TRUE,
-    "pch", "text", "add description", FALSE,
-    "pin", "plot", "add description", FALSE,
-    "plt", "plot", "add description", FALSE,
-    "ps", "text", "add description", FALSE,
-    "pty", "plot", "add description", FALSE,
-    "smo", "", "Unimplemented", FALSE,
-    "srt", "text", "add description", FALSE,
-    "tck", "axes", "add description", FALSE,
-    "tcl", "axes", "add description", FALSE,
-    "usr", "usr", "add description", FALSE,
-    "xaxp", "axes", "add description", FALSE,
-    "xaxs", "axes", "add description", FALSE,
-    "xaxt", "axes", "add description", FALSE,
-    "xlog", "plot", "add description", FALSE,
-    "xpd", "plot", "add description", FALSE,
-    "yaxp", "axes", "add description", FALSE,
-    "yaxs", "axes", "add description", FALSE,
-    "yaxt", "axes", "add description", FALSE,
-    "ylbias", "axes", "add description", FALSE,
-    "ylog", "plot", "add description", FALSE
+    ~param, ~group, ~short_def, ~read_only, ~decimals,
+    "adj", "text", "determines the way in which text strings are justified in text, mtext and title", FALSE, 1,
+    "ann", "annotation", " annotate the plots with axis titles and overall titles", FALSE, NA,
+    "ask", "", "deprecated - use devAskNewPage", FALSE, NA,
+    "bg", "device", "background color of device region", FALSE, NA,
+    "bty", "plot", "type of box drawn around plots", FALSE, NA,
+    "cex", "text", "relative magnification of text & symbols to default", FALSE, 1,
+    "cex.axis", "axes", "relative magnification of axis notation to cex", FALSE, 1,
+    "cex.lab", "axes", "relative magnification of x & y labels to cex", FALSE, 1,
+    "cex.main", "axes", "TBI", FALSE, 1,
+    "cex.sub", "axes", "TBI", FALSE, 1,
+    "cin", "text", "character size - inches. Same as 'cra'", TRUE, 2,
+    "col", "plot", "default plotting color", FALSE, NA,
+    "col.axis", "axes", "add description", FALSE, NA,
+    "col.lab", "annotation", "add description", FALSE, NA,
+    "col.main", "annotation", "add description", FALSE, NA,
+    "col.sub", "annotation", "add description", FALSE, NA,
+    "cra", "text", "character size - pixels. Same as 'cin'", TRUE, 1,
+    "crt", "text", "add description", FALSE, 1,
+    "csi", "text", "add description", TRUE, 1,
+    "cxy", "text", "add description", TRUE, 5,
+    "din", "device", "add description", TRUE, 3,
+    "err", "", "Unimplemented", FALSE, NA,
+    "family", "text", "add description", FALSE, NA,
+    "fg", "plot", "add description", FALSE, NA,
+    "fig", "figure", "add description", FALSE, 1,
+    "fin", "figure", "add description", FALSE, 3,
+    "font", "text", "add description", FALSE, 0,
+    "font.axis", "axes", "add description", FALSE, 8,
+    "font.lab", "annotation", "add description", FALSE, 8,
+    "font.main", "annotation", "add description", FALSE, 8,
+    "font.sub", "annotation", "add description", FALSE, 8,
+    "lab", "axes", "add description", FALSE, 8,
+    "las", "axes", "add description", FALSE, 8,
+    "lend", "element", "add description", FALSE, 8,
+    "lheight", "text", "add description", FALSE, 8,
+    "ljoin", "element", "add description", FALSE, 8,
+    "lmitre", "element", "add description", FALSE, 8,
+    "lty", "element", "add description", FALSE, 8,
+    "lwd", "element", "add description", FALSE, 8,
+    "mai", "margin", "add description", FALSE, 2,
+    "mar", "margin", "add description", FALSE, 1,
+    "mex", "text", "add description", FALSE, 1,
+    "mfcol", "panel", "add description", FALSE, 0,
+    "mfg", "panel", "add description", FALSE, 1,
+    "mfrow", "panel", "add description", FALSE, 0,
+    "mgp", "axes", "add description", FALSE, 8,
+    "mkh", "", "Ignored", FALSE, NA,
+    "new", "plot", "add description", FALSE, NA,
+    "oma", "panel", "add description", FALSE, 1,
+    "omd", "panel", "add description", FALSE, 1,
+    "omi", "panel", "add description", FALSE, 1,
+    "page", "plot", "add description", TRUE, NA,
+    "pch", "text", "add description", FALSE, 8,
+    "pin", "plot", "add description", FALSE, 8,
+    "plt", "plot", "add description", FALSE, 5,
+    "ps", "text", "add description", FALSE, 8,
+    "pty", "plot", "add description", FALSE, NA,
+    "smo", "", "Unimplemented", FALSE, NA,
+    "srt", "text", "add description", FALSE, 8,
+    "tck", "axes", "add description", FALSE, 8,
+    "tcl", "axes", "add description", FALSE, 8,
+    "usr", "usr", "add description", FALSE, 0,
+    "xaxp", "axes", "add description", FALSE, 8,
+    "xaxs", "axes", "add description", FALSE, 8,
+    "xaxt", "axes", "add description", FALSE, 8,
+    "xlog", "plot", "add description", FALSE, NA,
+    "xpd", "plot", "add description", FALSE, 8,
+    "yaxp", "axes", "add description", FALSE, 8,
+    "yaxs", "axes", "add description", FALSE, 8,
+    "yaxt", "axes", "add description", FALSE, 8,
+    "ylbias", "axes", "add description", FALSE, 8,
+    "ylog", "plot", "add description", FALSE, NA
   )
 
   message("Group: param [RO for read-only]: value - brief description")
