@@ -34,26 +34,29 @@ explr_graphics <- function() {
   # Parameters
   #
   message()
-  message(paste0(indent, "dev.size (in): "), appendLF = FALSE)
-  message(format(dev.size(units = "in"), digits = 3, nsmall = 3))
-   # format paste(dev.size(units = "in"))
+  message_nolf(paste0(indent, "dev.size (in): "))
+  message(paste(format(dev.size(units = "in"), digits = 3, nsmall = 3), collapse = " "))
 
-  message(paste0(indent, "din: "), appendLF = FALSE)
-  message(paste(format(par("din"), digits = 3, nsmall = 3)))
+  message_nolf(paste0(indent, "din: "))
+  message(paste(format(par("din"), digits = 3, nsmall = 3), collapse = " "))
 
-  message(paste0(indent, "mai: "), appendLF = FALSE)
-  message(par("mai"))
+  message_nolf(paste0(indent, "mai: "))
+  message(paste(par("mai"), collapse = " "))
 
-  message(paste0(indent, "pin: "), appendLF = FALSE)
-  message(format(par("pin"), digits = 3, nsmall = 3))
+  message_nolf(paste0(indent, "pin: "))
+  message(paste(format(par("pin"), digits = 3, nsmall = 3), collapse = " "))
 
-  message(paste0(indent, "usr: "), appendLF = FALSE)
-  message(format(par("usr"), digits = 3, nsmall = 3))
+  message_nolf(paste0(indent, "usr: "))
+  message(paste(par("usr"), collapse = " "))
 
-
+  message()
 }
 
-par_decoder <- function() {
+
+par_decoder <- function(params) {
+  # test param to be a string or list of strings
+  # check options
+  # optional group param
   p <- par()
   groups <- list("device", "panel", "figure", "margin", "plot", "usr", "annotation", "axes", "elements", "text")
 

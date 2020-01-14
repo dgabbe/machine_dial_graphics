@@ -20,11 +20,13 @@ Code to output to different directory:
 
 ## Project Summary
 
-Programmatically design a speed dial to set the spindle RPM on a manual machine tool. Output an SVG for laser etching.
+- Programmatically design a speed dial to set the spindle RPM on a manual machine tool. 
+- Output an SVG file for laser etching.
 
-![](https://www.practicalmachinist.com/vb/attachments/f20/7566d1226352266-speed-dial-bridgeport-2j-speed-dial-rotated.jpg){width=45%}
-![](http://vintagemachinery.org/photoindex/images/8630-F.jpg){width=50%}
-
+```{r sample-dials, fig.align='default', fig.show = "hold", out.width = "50%", out.height="50%"}
+knitr::include_graphics("./speed-dial-rotated.jpg")
+knitr::include_graphics("./8630-F.jpg")
+```
 
 ## David's Background
 
@@ -44,8 +46,10 @@ Programmatically design a speed dial to set the spindle RPM on a manual machine 
 
 ## Attempt #2: R
 
+- Develop code with Rnotebook
 - Have R figure out the scale values
 - Weird scale values, quicker to pick by hand
+- Historical footnote: _Machine Dials and Scales_ WR Machine Design v21 n8 Aug 1949, pp.98-105
 
 ## Attempt #3: R - ggplot
 
@@ -66,8 +70,10 @@ Nope.
 
 ## Selecting a Circular Visualization Package
 
-- There are 5? circular vizualization packages
-- `Circularize` comes with a book!
+Circos, originally in Perl, was created by Martin Krzywinski, who announced in 2009 with this brilliant paper: [“Circos: an Information Aesthetic for Comparative Genomics”](https://genome.cshlp.org/content/early/2009/06/15/gr.092759.109.abstract).
+
+- The contestants: circlize, BioCircos, RCircos, CIRCUS, and OmicCircos
+- The winner: `Circularize` comes with a book!
 
 ## Plot Examples
 
