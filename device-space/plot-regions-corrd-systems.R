@@ -11,8 +11,8 @@ mounting_hole_dia_in <- 0.375
 mounting_hole_rad <- mounting_hole_dia_in / 2
 dial_diameter_in <- 1.929
 
-x <- c(0, dial_outer_edge_dia_in)
-y <- c(0, dial_outer_edge_dia_in)
+x <- c(0, dial_outer_edge_dia_in + 2 / 25.4)
+y <- c(0, dial_outer_edge_dia_in + 2 / 25.4)
 # x <- c(0, 1)
 # y <- c(0, 1)
 
