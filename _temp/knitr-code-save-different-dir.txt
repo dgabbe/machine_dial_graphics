@@ -1,0 +1,7 @@
+knit: (function(inputFile, encoding) {
+      out_dir <- 'test';
+      rmarkdown::render(inputFile,
+      encoding=encoding,
+      output_file=file.path(dirname(inputFile), out_dir, <!-- Code to output to different directory:
+'analysis.html'))
+})

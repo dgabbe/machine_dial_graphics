@@ -9,14 +9,8 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', out.width = '900px', out.height = '900px')
+library(emo)
 ```
-
-Code to output to different directory:
-<!-- knit: (function(inputFile, encoding) {  -->
-<!--       out_dir <- 'test'; -->
-<!--       rmarkdown::render(inputFile, -->
-<!--                         encoding=encoding,  -->
-<!--                         output_file=file.path(dirname(inputFile), out_dir, 'analysis.html')) }) -->
 
 ## Project Summary
 
@@ -129,12 +123,22 @@ Cairo is an open source rasterizer
 
 ## R's Plotting Basics 2/2
 
-- R thinks about making plots
+- R thinks about plotting regions
 - `graphics` is the underlying package
 - `plot()` is the underlying function
 - `par()` with its **72** parameters controls plots
 
-\<\<check to see if there are options\>\>
+\<\<Make plot of the regions??\>\>
+
+```{r plot-regions, echo=TRUE, out.height="75%", out.width="75%"}
+plot(x = c(0, 5), y = c(0, 10), asp = 1)
+```
+##
+
+```{r plot-regions-2, echo=TRUE, out.height="75%", out.width="75%"}
+par(mai = c(0,0,0,0))
+plot(x = c(0, 5), y = c(0, 10), asp = 1, ann = FALSE, axes = TRUE)
+```
 
 ## RStudio's Graphic Device
 
@@ -154,18 +158,47 @@ Sample of RStudio issues:
 - [Figure size in RStudio is different than in rendered output](https://github.com/rstudio/rstudio/issues/4521)
 - [Plots with fixed fig.width are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
 
+## The Plan
+
+1. Collect the physical information
+1. `par` - create diagnostic code
+1. `plot` - draw reference marks
+1. `circlize` - draw outer most band
+1. `circlize` - remove extraneous space
+1. `r emo::ji("thinking")` positioning info for next band
+1. `plot` - font choice
+1. `circlize` - visual asthetics
+1. `r emo::ji("thinking")` create SVG file
+
+## Potentiometer Details
+
+```{r pot-specs, out.height="80%", out.width="80%"}
+knitr::include_graphics("./images/potentiometer-specs.png")
+```
+
+## Physical Information
+
+\<\<Add code for all the spacing, etc. speeds, etc.\>\>
+
+## Reference Marks
+
 ## Circlize: Plot Sequence
 
 1. `par()`
 1. `circos.par()`
 1. `circos.initialize()`
+1. `circos.track()`
 1. `par(new)` <----- The Trick
 
 ## Circlize: Visual Model
 
+\<\<Get page from book to explain terminology\>\>
+
 ## Circlize: Independent Factors
 
 \<\<code showing how factors sets the entire scale\>\>
+
+## Circlize: Outer Band
 
 ## Circlize: Parameters
 
@@ -183,7 +216,7 @@ circos.track(ylim = c(0, 1), panel.fun = function(x, y) {
 circos.clear()
 
 par(new = TRUE) # <- magic
-circos.par("canvas.xlim" = c(-2, 2), "canvas.ylim" = c(-2, 2))
+circos.par("canvas.xlim" = c(-2, 2), "canvas.ylim" = c(-2, 2)) # <- more magic
 factors = letters[1:3]
 circos.initialize(factors = factors, xlim = c(0, 1))
 circos.track(ylim = c(0, 1), panel.fun = function(x, y) {
@@ -227,22 +260,24 @@ What else could there be?
 
 ## Not All Fonts Are Equal `r emo::ji("confounded")`
 
-- Included vs Free vs Paid
+- Format (PostScript Type1, **TrueType**, Open Font)
 - Glyph set
 - Encoding
-- Format (PostScript Type1, TrueType, Open Font)
-
-## Quartz Fonts
-
-```{r quartz-fonts, echo=TRUE}
-quartzFonts()
-```
+- Included vs Free vs Paid
 
 ## The Fun Part - Picking a Font
 
 `extrafont`
 
+```{r quartz-fonts, echo=TRUE}
+quartzFonts()
+```
+
 \<\<add examples of different fonts\>\>
+
+## The Finished Dial
+
+\<\<Include SVG file here\>\>
 
 ## Summary
 
