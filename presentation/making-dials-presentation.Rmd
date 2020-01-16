@@ -117,7 +117,6 @@ Need a graphic output device of some kind to display results.
 - `grDevices` contains R's graphic devices and rasterizer
 - `dev.*()` functions control them
 
-Cairo is an open source rasterizer
 
 \<\<check to see if there are options\>\>
 
@@ -178,7 +177,15 @@ knitr::include_graphics("./images/potentiometer-specs.png")
 
 ## Physical Information
 
-\<\<Add code for all the spacing, etc. speeds, etc.\>\>
+```{r physical-info, echo=TRUE, eval=FALSE}
+mounting_hole_dia_in <- 0.375
+dial_gap_mm <- 2 # leave space around outside of dial
+dial_diameter_in <- mm_to_in(45 + 2 * dial_gap_mm)
+dial_outer_edge_dia_in <- 3.426 # 246.67px, width of the flat part of the chasis cover
+dial_rotation <- 312 # degrees
+start_angle <- 270 - (360 - dial_rotation)/2
+stop_angle <- 270 + (360 - dial_rotation)/2
+```
 
 ## Reference Marks
 
