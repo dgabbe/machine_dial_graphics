@@ -128,8 +128,6 @@ Cairo is an open source rasterizer
 - `plot()` is the underlying function
 - `par()` with its **72** parameters controls plots
 
-\<\<Make plot of the regions??\>\>
-
 ```{r plot-regions, echo=TRUE, out.height="75%", out.width="75%"}
 plot(x = c(0, 5), y = c(0, 10), asp = 1)
 ```
