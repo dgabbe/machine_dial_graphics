@@ -298,6 +298,7 @@ quartzFonts()
 Packages used:
 
 - circlize
+- dplyr
 - extrafonts
 - R.Devices (verify)
 - tibble

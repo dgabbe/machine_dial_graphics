@@ -220,22 +220,6 @@ par(
   fig = c(0, 1, 0, 1)
 )
 
-# cross_mark <- mounting_hole_dia_in / 2
-# lines(x = c(-cross_mark, cross_mark), y = c(0, 0), col = "lightgray")
-# lines(x = c(0, 0), y = c(-cross_mark, cross_mark), col = "lightgray")
-
-# # Outline for shaft hole
-# plotrix::draw.circle(c(0), c(0),
-#                      radius = c(mounting_hole_dia_in / 2, dial_diameter_in / 2),
-#                      border = c("lightgray", "lightgray"), lty = c(1, 3)
-# )
-
-# faint boundary for dial
-# plotrix::draw.circle(c(0), c(0),
-#         radius = c(dial_diameter_in / 2),
-#         border = "lightgray", lty = 3)
-
-
 if (is_save_to_file) {
   dev.off()
 }
