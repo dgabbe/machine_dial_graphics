@@ -1,3 +1,5 @@
+library(Hmisc)
+
 # Draw the various plot parameters, device & user corrdinates
 
 #
@@ -22,7 +24,7 @@ par(mai = rep(0, 4))
 # Create an empty plot
 plot(x, y, asp = 1, type = "n", ann = FALSE, axes = FALSE)
 
-explr_graphics()
+if (exists("explr_graphics")) { explr_graphics() }
 
 box_types <- c("plot", "figure", "inner", "outer")
 line_type <- c("solid")
@@ -32,7 +34,7 @@ box(which = "inner", col = "green")
 box(which = "outer", col = "blue")
 
 par(new = TRUE)
-explr_graphics()
+if (exists("explr_graphics")) { explr_graphics() }
 plot(c(-center, center), c(-center, center),
      asp = 1,
      type = "n",
@@ -40,7 +42,9 @@ plot(c(-center, center), c(-center, center),
      axes = FALSE
 )
 
-explr_graphics()
+cnvrt.coords(0, 0, input="usr")
+if (exists("explr_graphics")) { explr_graphics() }
+
 segments(
   x0 = c(-mounting_hole_rad - 0.06, 0),
   x1 = c(mounting_hole_rad + 0.06, 0),
