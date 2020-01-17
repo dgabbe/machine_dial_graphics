@@ -3,8 +3,9 @@ title: 'Occassional Maker Series: Creating Dials with R'
 author: "David Gabbé"
 date: "1/7/2020"
 output: 
-  slidy_presentation:
-    footer: "David Gabbé github.com/dgabbe/machine_dial_graphics"
+  slidy_presentation: 
+    footer: David Gabbé github.com/dgabbe/machine_dial_graphics
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
@@ -117,25 +118,19 @@ Need a graphic output device of some kind to display results.
 - `grDevices` contains R's graphic devices and rasterizer
 - `dev.*()` functions control them
 
-
-\<\<check to see if there are options\>\>
+```{r default-device, echo=TRUE, eval=FALSE}
+getOption("device") # for default device
+```
 
 ## R's Plotting Basics 2/2
 
 - R thinks about plotting regions
+- Terminology a bit confusing
 - `graphics` is the underlying package
 - `plot()` is the underlying function
 - `par()` with its **72** parameters controls plots
 
-```{r plot-regions, echo=TRUE, out.height="75%", out.width="75%"}
-plot(x = c(0, 5), y = c(0, 10), asp = 1)
-```
-##
-
-```{r plot-regions-2, echo=TRUE, out.height="75%", out.width="75%"}
-par(mai = c(0,0,0,0))
-plot(x = c(0, 5), y = c(0, 10), asp = 1, ann = FALSE, axes = TRUE)
-```
+`r emo::ji("point_right")` demo `par()`
 
 ## RStudio's Graphic Device
 
@@ -155,6 +150,39 @@ Sample of RStudio issues:
 - [Figure size in RStudio is different than in rendered output](https://github.com/rstudio/rstudio/issues/4521)
 - [Plots with fixed fig.width are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
 
+## Simplying Plot Parameters
+
+Only interested in creating a full size SVG graphic
+
+plot region + margins = figure region = device region
+
+```{r simplify-plotting, echo=TRUE, eval=FALSE, out.height="75%", out.width="75%"}
+par(
+  mai = c(0, 0, 0, 0), # No margins
+  ann = FALSE,         # No annotations
+  xaxs = "i",          # No 4% extra range 
+  yaxs = "i"           # # No 4% extra range 
+  ) 
+plot(
+  asp = 1,             # 1:1 aspect ratio
+  axes = FALSE         # No axes
+  )
+```
+
+
+```{r plot-regions-2, echo=TRUE, out.height="75%", out.width="75%"}
+par(mfrow = c(1, 2), omi = c(0.3, 0.3, 0.3, 0.3), xaxs = "i", yaxs = "i")
+plot(x = c(0, 2), y = c(0, 3), asp = 1, fg = "red")
+box("figure", col = "lightblue")
+
+par(mai = c(0,0,0,0))
+plot(x = c(0, 2), y = c(0, 3), asp = 1, ann = FALSE, axes = FALSE, fg = "red")
+box("figure", col = "blue")
+box("outer", col = "black")
+```
+
+
+
 ## The Plan
 
 1. Collect the physical information
@@ -166,12 +194,6 @@ Sample of RStudio issues:
 1. `plot` - font choice
 1. `circlize` - visual asthetics
 1. `r emo::ji("thinking")` create SVG file
-
-## Potentiometer Details
-
-```{r pot-specs, out.height="80%", out.width="80%"}
-knitr::include_graphics("./images/potentiometer-specs.png")
-```
 
 ## Physical Information
 
@@ -185,7 +207,35 @@ start_angle <- 270 - (360 - dial_rotation)/2
 stop_angle <- 270 + (360 - dial_rotation)/2
 ```
 
+```{r pot-specs, out.height="80%", out.width="80%"}
+knitr::include_graphics("./images/potentiometer-specs.png")
+```
+
+## Diagnoistic Functions
+
+When things don't turn out as expected:
+
+- `r emo::ji("hankey")` insert a punch of print statements
+- `r emo::ji("confounded")` step through w/a debugger
+- `r emo::ji("bulb")` write a function than can be reused
+
+```{r diag-demo, echo=FALSE}
+suppressWarnings(source("../explr_graphics.R"))
+plot(x = 0, y = 0, xaxs = "i", yaxs = "i")
+text(-1, 0.5, adj = 0, labels = explr_graphics(), col = "blue")
+```
+
 ## Reference Marks
+
+- Secondary operations need alignment marks
+- carpenter - origin is a corner
+  
+```{r, eval=FALSE, echo=TRUE}
+circle(width/2, height/2, diameter/2)
+```
+
+- mathematician solution - origin centered
+- computer nerd - origin centered, 1 unit scale
 
 ## Circlize: Plot Sequence
 
@@ -208,6 +258,9 @@ stop_angle <- 270 + (360 - dial_rotation)/2
 ## Circlize: Parameters
 
 ## Circlize: Nested Plots
+
+"Your mission, should you decide to accept", is to calculate the precise
+value for `canvas.xlim` and `canvas.ylim`.
 
 ```{r separate_nested_plots-2, out.height="500px", out.width="500px"}
 knitr::include_graphics("./images/circlize-nested-1.svg")
@@ -313,9 +366,8 @@ Packages used:
 - [_Circular Visualization in R_](https://jokergoo.github.io/circlize_book/book/), Zuguang Gu
 - [_How Big is Your Graph?_](https://rstudio.com/wp-content/uploads/2016/10/how-big-is-your-graph.pdf) Cheat Sheet
 - [_R Graphics_](https://books.google.com/books?id=HouADwAAQBAJ&printsec=frontcover), Paul Murrel, p.99
-- [Tips and tricks for working with images and figures in R Markdown documents](http://zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/)
+- Zev Ross' Blog: [Tips and tricks for working with images and figures in R Markdown documents](https://www.zevross.com/blog/2017/06/19/tips-and-tricks-for-working-with-images-and-figures-in-r-markdown-documents/)
 - https://www.r-bloggers.com/changing-the-font-of-r-base-graphic-plots/
-- [Zev Ross' Blog](https://www.zevross.com/blog/) in general
 
 ## Thanks
 
