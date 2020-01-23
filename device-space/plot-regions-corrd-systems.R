@@ -1,4 +1,4 @@
-library(Hmisc)
+# library(Hmisc)
 
 # Draw the various plot parameters, device & user corrdinates
 
@@ -42,7 +42,7 @@ plot(c(-center, center), c(-center, center),
      axes = FALSE
 )
 
-cnvrt.coords(0, 0, input="usr")
+# cnvrt.coords(0, 0, input="usr")
 if (exists("explr_graphics")) { explr_graphics() }
 
 segments(
