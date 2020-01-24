@@ -137,7 +137,13 @@ explr_graphics <- function() {
       message_nolf(m)
       msg <<- paste0(msg, m)
 
-      m <- paste(format(par(p), digits = 3, nsmall = filter(par_params, param == p)[["decimals"]]), collapse = " ")
+      m <- paste(format(
+        par(p),
+        digits = 3,
+        nsmall = filter(par_params, param == p)[["decimals"]]
+        ),
+        collapse = " "
+      )
       message(m)
       msg <<- paste(msg, m, "\n")
     }
