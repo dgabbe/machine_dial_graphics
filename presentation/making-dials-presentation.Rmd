@@ -34,6 +34,13 @@ knitr::include_graphics("./images/8630-F.jpg")
 "It will work after the 3rd try"
 
 
+## The Drill Press
+
+```{r belt-pulleys, fig.align='default', fig.show = "hold", out.height="40%", out.width="40%"}
+knitr::include_graphics("./images/belt-pulley-view.jpg")
+knitr::include_graphics("./images/dial-view.jpg")
+```
+
 ## Iteration #1: Inkscape
 
 - Inkscape is wonderful
@@ -148,7 +155,7 @@ Will not generate a pixel accurate preview of the SVG file
 Sample of RStudio issues:
 
 - [Figure size in RStudio is different than in rendered output](https://github.com/rstudio/rstudio/issues/4521)
-- [Plots with fixed fig.width are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
+- [Plots with fixed `fig.width` are rendered differently in rstudio and knitr output](https://github.com/rstudio/rstudio/issues/4913)
 
 ## Simplying Plot Parameters
 
@@ -234,7 +241,7 @@ text(-1, 0.5, adj = 0, labels = explr_graphics(), col = "blue")
 
 ## Reference Marks | Rmarkdown Rendering
 
-```{r reference-marks, echo=FALSE, fig.width=5, fig.height=5}
+```{r reference-marks, echo=FALSE, fig.width=6, fig.height=6}
 mm_to_in <- function(mm) {return(mm * 25.4)}
 width <- 3.426
 par(mai = c(0.5, 0.5, 0.5, 0.5), xaxs = "i", yaxs = "i")
@@ -261,7 +268,8 @@ carpenter <- function() {
     y1 = c(zero, zero + 0.5),
     col = "red"
   )
-  text(0, 0.7, adj = 0, labels = explr_graphics(), col = "blue")
+  text(0, 2, adj = 0, labels = explr_graphics(), col = "blue")
+  box("figure", col = "lightblue")
 }
 machinst <- function() {
   range <- c(-width/2, width/2)
@@ -285,7 +293,8 @@ machinst <- function() {
     y1 = c(zero, zero + 0.5),
     col = "red"
   )
-  text(-1.7, -1, adj = 0, labels = explr_graphics(), col = "blue")
+  text(-1.7, 0.5, adj = 0, labels = explr_graphics(), col = "blue")
+  box("figure", col = "lightblue")
 }
 engineer <- function() {
   range <- c(-1, 1)
@@ -310,7 +319,8 @@ engineer <- function() {
     y1 = c(zero, zero + 0.5 * sf),
     col = "red"
   )
-  text(-1, -0.6, adj = 0, labels = explr_graphics(), col = "blue")
+  text(-1, 0.1, adj = 0, labels = explr_graphics(), col = "blue")
+  box("figure", col = "lightblue")
 }
 
 carpenter()

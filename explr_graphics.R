@@ -131,7 +131,7 @@ explr_graphics <- function() {
   msg <- paste0(msg, m, "\n")
 
   lapply(
-    list("din", "mai", "pin", "usr"),
+    list("din", "fin", "mai", "pin", "usr"),
     function(p) {
       m <- paste0(indent, p, ": ")
       message_nolf(m)
