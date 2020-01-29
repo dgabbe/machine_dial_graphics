@@ -30,6 +30,12 @@ is_save_to_file <- FALSE
 mounting_hole_dia_in <- 0.375
 dial_gap_mm <- 2 # leave space around outside of dial
 dial_diameter_in <- mm_to_in(45 + 2 * dial_gap_mm)
+dial_outer_edge_dia_in <- 3.426 # 246.67px, width of the flat part of the chasis cover
+
+scale <- function(x, usr = 2, physical = dial_outer_edge_dia_in) {
+  return(x * usr / physical)
+}
+
 
 font_size <- 18 #pt
 scale_height <- pt_to_in(1.6 * font_size)
@@ -54,11 +60,70 @@ draw_outer_border <- function() {
   lines(x = c(x1, x1), y = c(y0, y1), col = "lightgray") # right side
 }
 
-draw_center_mark <- function(mounting_hole_dia = mounting_hole_dia_in) {}
+draw_center_mark <- function(mounting_hole_dia = mounting_hole_dia_in) {
+  # par(new = TRUE, asp = 1)
+  p0 <- scale((-mounting_hole_dia / 2 - 1/16))
+  p1 <- scale((mounting_hole_dia / 2 + 1/16))
+  segments(x0 = c(p0, 0), x1 = c(p1, 0), y0 = c(0, p0), y1 = c(0, p1), col = "lightgray")
+}
 
-draw_dial_boundary <- function(dia = dial_diameter_in) {}
+draw_dial_boundary <- function(dia = dial_diameter_in + 2 * mm_to_in(2)) {
+  plotrix::draw.circle(
+    c(scale(0)), c(scale(0)),
+    radius = c(scale(dia / 2)),
+    border = c("lightgray"), lty = c(3)
+  )
+}
 
-draw_credit <- function() {}
+draw_shaft_hole <- function(dia = mounting_hole_dia_in) {
+  plotrix::draw.circle(
+    c(scale(0)), c(scale(0)),
+    radius = c(scale(dia / 2)),
+    border = c("lightgray"), lty = c(1)
+  )
+}
+
+draw_credit <- function() {
+  credit <- c("by David Gabbé", "Frame38.com")
+  credit_data <- tibble(factors = letters[1:length(credit)], text = credit,
+                        x = rep(0.5, length(credit)), y = rep(0.5, length(credit)))
+  xy_canvas_lim <- 2.25
+  cell_padding <- c(0.00, 1.00, 0.00, 1.00)
+  font_size <- 11
+  scale_height <- pt_to_in(1.6 * font_size)
+
+  par(new = TRUE)
+
+  circos.par(
+    canvas.xlim = c(-xy_canvas_lim, xy_canvas_lim),
+    canvas.ylim = c(-xy_canvas_lim, xy_canvas_lim),
+    clock.wise = TRUE,
+    start.degree = 360 / length(credit),
+    cell.padding = cell_padding
+  )
+
+  circos.initialize(factors = credit_data$factors, xlim = c(0, 1))
+
+  circos.track(
+    factors = credit_data$factors,
+    ylim = c(0, 1),
+    bg.border = "green",
+    track.height = convert_length(scale_height, "in"),
+    panel.fun = function(x, y) {
+      circos.trackText(
+        factors = credit_data$factors,
+        x = credit_data$x,
+        y = credit_data$y,
+        labels = credit_data$text,
+        facing = "bending.inside",
+        niceFacing = TRUE,
+        cex = fontsize(font_size),
+        font = 2
+      )
+    }
+  )
+  circos.clear()
+}
 
 speeds1 <- c(700, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2235)
 speeds2 <- c(480, 600, 800, 1000, 1200, 1400, 1530)
@@ -79,18 +144,16 @@ dial_scales <- tribble(
 
 xy_canvas_lim <- 1 # init for outermost scale
 dial_scales <- add_column(dial_scales, bg_color = c("light blue", "yellow", "red", "purple")) # debugging
-dial_scales <- add_column(dial_scales, xy_canvas_lim = xy_canvas_lims)
+dial_scales <- add_column(dial_scales, xy_canvas_lim = xy_canvas_lim)
 dial_scales <- add_column(dial_scales, type_adj = c(20, 16, 12, 8))
 dial_scales <- add_column(dial_scales, line_width = c(4, 3, 2.5, 1.75))
 dial_scales <- add_column(dial_scales, line_color = c("#000000", "#222222", "#444444", "#666666"))
 
-dial_outer_edge_dia_in <- 3.426 # 246.67px, width of the flat part of the chasis cover
 dial_rotation <- 312 # degrees
 start_angle <- 270 - (360 - dial_rotation)/2
 stop_angle <- 270 + (360 - dial_rotation)/2
 spindle_pulley_diameters <- c(7.25, 6.25, 5.25, 4.5)
 
-# Code from circlize-test-run chunk
 
 # Definitions that should not be changed
 gap_after = stop_angle - start_angle
@@ -112,34 +175,36 @@ if (is_save_to_file) {
 # Set up the device
 # Do not include 'new = "TRUE"' because there is no plot yet.
 par(
-  # Figure region in inches
-  fin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
   # plot dimensions in inches
   pin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
   # margin size in inches
   mai = c(0, 0, 0, 0),
-  # (NDC) coordinates of the figure region in the display region of the device.
-  fig = c(0, 1, 0, 1), # wonder if this is the problem...
-  # annotation - axis and overall titles
-  ann = FALSE
+  ann = FALSE,
+  family = font_family
 )
 
-# Create a new frame so RStudio doesn't overplot
-plot.new(asp = 1)  # not creating a new plot in RStudio Plot pane...
+unit_range <- c(-1, 1)
+plot(
+  unit_range,
+  unit_range,
+  asp = 1,
+  type = "n",
+  ann = FALSE,
+  axes = FALSE,
+  xaxs = "i",
+  yaxs = "i"
+
+)
+
+draw_center_mark()
+draw_shaft_hole()
+draw_dial_boundary()
+# draw_credit()
+box(which = "outer", col = "red")
 
 # draw a border for printing
-draw_outer_border()
+# draw_outer_border()
 
-cross_mark <- mounting_hole_dia_in / 2
-lines(x = c(0.5 - cross_mark, 0.5 + cross_mark), y = c(0.5, 0.5), col = "lightgray")
-lines(x = c(0.5, 0.5), y = c(0.5 - cross_mark, 0.5 + cross_mark), col = "lightgray")
-
-# Outline for shaft hole
-plotrix::draw.circle(
-  c(0.5), c(0.5),
-  radius = c(mounting_hole_dia_in / 2, dial_diameter_in / 2),
-  border = c("lightgray", "lightgray"), lty = c(1, 3)
-)
 
 #
 # Add the RPM scales
@@ -178,8 +243,7 @@ for (i in 1:nrow(dial_scales)) {
         facing = "outside",
         niceFacing = TRUE,
         cex = fontsize(font_size),
-        font = 2,
-        family = font_family
+        font = 2
       )
       # Scale delineation
       circos.lines(
@@ -208,18 +272,7 @@ note(txt = paste("Scale", i, ": bottom radius: ",
   circos.clear() # always end w/clear
 }
 
-
-# Add rectangular boundry, add canvas size
-
-# Add dimensional marks
-par(
-  new = TRUE,
-  fin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
-  pin = c(dial_outer_edge_dia_in, dial_outer_edge_dia_in),
-  mar = c(0, 0, 0, 0),
-  fig = c(0, 1, 0, 1)
-)
-
+draw_credit()
 if (is_save_to_file) {
   dev.off()
 }
