@@ -222,7 +222,7 @@ knitr::include_graphics("./images/potentiometer-specs.png")
 
 When things don't turn out as expected:
 
-- `r emo::ji("hankey")` insert a punch of print statements
+- `r emo::ji("hankey")` insert a bunch of print statements
 - `r emo::ji("confounded")` step through w/a debugger
 - `r emo::ji("bulb")` write a function than can be reused
 
